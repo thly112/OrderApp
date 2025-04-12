@@ -21,7 +21,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Chuyển sang MainActivity
-                Intent intent = new Intent(StartActivity.this, HomeActivity.class);
+                Intent intent = new Intent(StartActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
