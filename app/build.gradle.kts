@@ -59,4 +59,5 @@ dependencies {
 
     // Material
     implementation ("com.google.android.material:material:1.11.0")
+    implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
 }

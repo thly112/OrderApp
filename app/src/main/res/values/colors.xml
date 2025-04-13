@@ -7,6 +7,6 @@
     <color name="orange">#F26139</color>
     <color name="iconColor">#FF0000</color>
     <color name="textColor">#000000</color>
-    <color name="endColor">#00FF00</color>
-    <color name="startColor">#FF0000</color>
+    <color name="endColor">#F26139</color>
+    <color name="startColor">#FA4006</color>
 </resources>
