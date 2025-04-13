@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.navigation.fragment)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -52,4 +53,10 @@ dependencies {
     implementation (libs.retrofit)
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation (libs.rxjava3.retrofit.adapter)
+    // Navigation Component
+    implementation ("androidx.navigation:navigation-fragment:2.7.7")
+    implementation ("androidx.navigation:navigation-ui:2.7.7")
+
+    // Material
+    implementation ("com.google.android.material:material:1.11.0")
 }
