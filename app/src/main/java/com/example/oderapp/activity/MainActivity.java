@@ -1,12 +1,15 @@
 package com.example.oderapp.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -61,17 +64,40 @@ public class MainActivity extends AppCompatActivity {
         ActionBar();
         ActionViewFlipper();
         if(isConnected(this)){
-            Toast.makeText(getApplicationContext(), "ok", Toast.LENGTH_LONG).show();
             ActionViewFlipper();
-//            getLoaiSanPham();
-//            getSpMoi();
-            fakeLoaiSP();
-            fakeSpMoi();
+            getLoaiSanPham();
+            getSpMoi();
+            getEventClick();
+//            fakeLoaiSP();
+//            fakeSpMoi();
 
 
         }else{
             Toast.makeText(getApplicationContext(), "khong co internet", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void getEventClick() {
+        listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 0:
+                        Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(trangchu);
+                        break;
+                    case 1:
+                        Intent douong = new Intent(getApplicationContext(), DoUongActivity.class);
+                        douong.putExtra("loai",1);
+                        startActivity(douong);
+                        break;
+                    case 2:
+                        Intent banh = new Intent(getApplicationContext(), BanhActivity.class);
+                        startActivity(banh);
+                        break;
+                }
+            }
+        });
     }
 
     private void getSpMoi() {
@@ -87,32 +113,33 @@ public class MainActivity extends AppCompatActivity {
                         }
                     },
                     throwable -> {
-                        Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server spm" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("ERROR_SPM", throwable.getMessage());
                     }
             ));
     }
 
-    private void fakeSpMoi() {
-        mangSpMoi.add(new SanPhamMoi(
-                1,
-                "Menu 1",
-                R.drawable.menu1,
-                "2300000",
-                "",
-                1 // id loại sản phẩm
-        ));
-        mangSpMoi.add(new SanPhamMoi(
-                2,
-                "Menu 2",
-                R.drawable.menu2,
-                "2300000",
-                "", // giá truyền dưới dạng String
-                2 // id loại sản phẩm
-        ));
-
-        spAdapter = new SanPhamMoiAdapter(getApplicationContext(), mangSpMoi);
-        recyclerViewManHinhChinh.setAdapter(spAdapter);
-    }
+//    private void fakeSpMoi() {
+//        mangSpMoi.add(new SanPhamMoi(
+//                1,
+//                "Menu 1",
+//                R.drawable.menu1,
+//                "2300000",
+//                "",
+//                1 // id loại sản phẩm
+//        ));
+//        mangSpMoi.add(new SanPhamMoi(
+//                2,
+//                "Menu 2",
+//                R.drawable.menu2,
+//                "2300000",
+//                "", // giá truyền dưới dạng String
+//                2 // id loại sản phẩm
+//        ));
+//
+//        spAdapter = new SanPhamMoiAdapter(getApplicationContext(), mangSpMoi);
+//        recyclerViewManHinhChinh.setAdapter(spAdapter);
+//    }
 
     private void getLoaiSanPham() {
         compositeDisposable.add(apiBanHang.getLoaiSP()
@@ -121,28 +148,28 @@ public class MainActivity extends AppCompatActivity {
         .subscribe(
                 loaiSPModel -> {
                     if (loaiSPModel.isSuccess()) {
-                        mangloaisp = loaiSPModel.getResult(); // ✅ đúng kiểu List<LoaiSP>
+                        mangloaisp = loaiSPModel.getResult();
                         loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
                         listViewManHinhChinh.setAdapter(loaiSPAdapter);
-                        loaiSPAdapter.notifyDataSetChanged();
+                        //loaiSPAdapter.notifyDataSetChanged();
                     }
                 },
                 throwable -> {
-                    Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server lsp" + throwable.getMessage(), Toast.LENGTH_LONG).show();
                 }
         ));
 
     }
-    private void fakeLoaiSP() {
-        mangloaisp.clear();
-        mangloaisp.add(new LoaiSP(1, "Giày Thể Thao", "https://bit.ly/loaigiay1"));
-        mangloaisp.add(new LoaiSP(2, "Giày Tây", "https://bit.ly/loaigiay2"));
-        mangloaisp.add(new LoaiSP(3, "Giày Sandal", "https://bit.ly/loaigiay3"));
-        mangloaisp.add(new LoaiSP(4, "Phụ Kiện", "https://bit.ly/phukien1"));
-        mangloaisp.add(new LoaiSP(5, "Khuyến Mãi", "https://bit.ly/khuyenmai1"));
-
-        loaiSPAdapter.notifyDataSetChanged(); // cập nhật lại ListView
-    }
+//    private void fakeLoaiSP() {
+//        mangloaisp.clear();
+//        mangloaisp.add(new LoaiSP(1, "Giày Thể Thao", "https://bit.ly/loaigiay1"));
+//        mangloaisp.add(new LoaiSP(2, "Giày Tây", "https://bit.ly/loaigiay2"));
+//        mangloaisp.add(new LoaiSP(3, "Giày Sandal", "https://bit.ly/loaigiay3"));
+//        mangloaisp.add(new LoaiSP(4, "Phụ Kiện", "https://bit.ly/phukien1"));
+//        mangloaisp.add(new LoaiSP(5, "Khuyến Mãi", "https://bit.ly/khuyenmai1"));
+//
+//        loaiSPAdapter.notifyDataSetChanged(); // cập nhật lại ListView
+//    }
 
 
     private void ActionViewFlipper() {
@@ -188,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         viewFlipper = findViewById(R.id.viewflipper);
         recyclerViewManHinhChinh = findViewById(R.id.recycleview);
         recyclerViewManHinhChinh = findViewById(R.id.recycleview);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,1);
         recyclerViewManHinhChinh.setLayoutManager(layoutManager);
         recyclerViewManHinhChinh.setHasFixedSize(true);
         listViewManHinhChinh = findViewById(R.id.listviewmanhinhchinh);
@@ -197,10 +224,10 @@ public class MainActivity extends AppCompatActivity {
         // khoi tao list
         mangloaisp = new ArrayList<>();
         // khoi tao adapter
-        loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
-        listViewManHinhChinh.setAdapter(loaiSPAdapter);
+//        loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
+//        listViewManHinhChinh.setAdapter(loaiSPAdapter);
         // khoi tao mang san pham moi
-        mangSpMoi = new ArrayList<>();
+//        mangSpMoi = new ArrayList<>();
     }
     private boolean isConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -212,5 +239,11 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
 
+    }
+
+    @Override
+    protected void onDestroy(){
+        compositeDisposable.clear();
+        super.onDestroy();
     }
 }
