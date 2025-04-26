@@ -3,12 +3,12 @@ package com.example.oderapp.model;
 public class SanPhamMoi {
     int id;
     String tensp;
-    int hinhanh;
+    String hinhanh;
     String giasp;
     String mota;
     int loai;
 
-    public SanPhamMoi(int id, String tensp, int hinhanh, String giasp, String mota, int loai) {
+    public SanPhamMoi(int id, String tensp, String hinhanh, String giasp, String mota, int loai) {
         this.id = id;
         this.tensp = tensp;
         this.hinhanh = hinhanh;
@@ -33,11 +33,11 @@ public class SanPhamMoi {
         this.tensp = tensp;
     }
 
-    public int getHinhanh() {
+    public String getHinhanh() {
         return hinhanh;
     }
 
-    public void setHinhanh(int hinhanh) {
+    public void setHinhanh(String hinhanh) {
         this.hinhanh = hinhanh;
     }
 

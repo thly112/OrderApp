@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -64,13 +65,19 @@ public class MainActivity extends AppCompatActivity {
         ActionBar();
         ActionViewFlipper();
         if(isConnected(this)){
-            Toast.makeText(getApplicationContext(), "ok", Toast.LENGTH_LONG).show();
             ActionViewFlipper();
             getLoaiSanPham();
+<<<<<<< HEAD
 //            getSpMoi();
 //            fakeLoaiSP();
             fakeSpMoi();
             getEventClick();
+=======
+            getSpMoi();
+            getEventClick();
+//            fakeLoaiSP();
+//            fakeSpMoi();
+>>>>>>> be69519d00a4da9e1bbccc2cc6738e3de4e05743
 
 
         }else{
@@ -81,13 +88,19 @@ public class MainActivity extends AppCompatActivity {
     private void getEventClick() {
         listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
+<<<<<<< HEAD
             public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                 switch (i) {
+=======
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+>>>>>>> be69519d00a4da9e1bbccc2cc6738e3de4e05743
                     case 0:
                         Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(trangchu);
                         break;
                     case 1:
+<<<<<<< HEAD
                         Intent caphe = new Intent(getApplicationContext(), CaPheActivity.class);
                         startActivity(caphe);
                         break;
@@ -98,6 +111,15 @@ public class MainActivity extends AppCompatActivity {
                     case 3:
                         Intent tra = new Intent(getApplicationContext(), TraActivity.class);
                         startActivity(tra);
+=======
+                        Intent douong = new Intent(getApplicationContext(), DoUongActivity.class);
+                        douong.putExtra("loai",1);
+                        startActivity(douong);
+                        break;
+                    case 2:
+                        Intent banh = new Intent(getApplicationContext(), BanhActivity.class);
+                        startActivity(banh);
+>>>>>>> be69519d00a4da9e1bbccc2cc6738e3de4e05743
                         break;
                 }
             }
@@ -117,32 +139,33 @@ public class MainActivity extends AppCompatActivity {
                         }
                     },
                     throwable -> {
-                        Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server spm" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("ERROR_SPM", throwable.getMessage());
                     }
             ));
     }
 
-    private void fakeSpMoi() {
-        mangSpMoi.add(new SanPhamMoi(
-                1,
-                "Menu 1",
-                R.drawable.menu1,
-                "2300000",
-                "",
-                1 // id loại sản phẩm
-        ));
-        mangSpMoi.add(new SanPhamMoi(
-                2,
-                "Menu 2",
-                R.drawable.menu2,
-                "2300000",
-                "", // giá truyền dưới dạng String
-                2 // id loại sản phẩm
-        ));
-
-        spAdapter = new SanPhamMoiAdapter(getApplicationContext(), mangSpMoi);
-        recyclerViewManHinhChinh.setAdapter(spAdapter);
-    }
+//    private void fakeSpMoi() {
+//        mangSpMoi.add(new SanPhamMoi(
+//                1,
+//                "Menu 1",
+//                R.drawable.menu1,
+//                "2300000",
+//                "",
+//                1 // id loại sản phẩm
+//        ));
+//        mangSpMoi.add(new SanPhamMoi(
+//                2,
+//                "Menu 2",
+//                R.drawable.menu2,
+//                "2300000",
+//                "", // giá truyền dưới dạng String
+//                2 // id loại sản phẩm
+//        ));
+//
+//        spAdapter = new SanPhamMoiAdapter(getApplicationContext(), mangSpMoi);
+//        recyclerViewManHinhChinh.setAdapter(spAdapter);
+//    }
 
     private void getLoaiSanPham() {
         compositeDisposable.add(apiBanHang.getLoaiSP()
@@ -151,14 +174,14 @@ public class MainActivity extends AppCompatActivity {
         .subscribe(
                 loaiSPModel -> {
                     if (loaiSPModel.isSuccess()) {
-                        mangloaisp = loaiSPModel.getResult(); // ✅ đúng kiểu List<LoaiSP>
+                        mangloaisp = loaiSPModel.getResult();
                         loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
                         listViewManHinhChinh.setAdapter(loaiSPAdapter);
-                        loaiSPAdapter.notifyDataSetChanged();
+                        //loaiSPAdapter.notifyDataSetChanged();
                     }
                 },
                 throwable -> {
-                    Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server lsp" + throwable.getMessage(), Toast.LENGTH_LONG).show();
                 }
         ));
 
@@ -218,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
         viewFlipper = findViewById(R.id.viewflipper);
         recyclerViewManHinhChinh = findViewById(R.id.recycleview);
         recyclerViewManHinhChinh = findViewById(R.id.recycleview);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,1);
         recyclerViewManHinhChinh.setLayoutManager(layoutManager);
         recyclerViewManHinhChinh.setHasFixedSize(true);
         listViewManHinhChinh = findViewById(R.id.listviewmanhinhchinh);
@@ -227,10 +250,10 @@ public class MainActivity extends AppCompatActivity {
         // khoi tao list
         mangloaisp = new ArrayList<>();
         // khoi tao adapter
-        loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
-        listViewManHinhChinh.setAdapter(loaiSPAdapter);
+//        loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
+//        listViewManHinhChinh.setAdapter(loaiSPAdapter);
         // khoi tao mang san pham moi
-        mangSpMoi = new ArrayList<>();
+//        mangSpMoi = new ArrayList<>();
     }
     private boolean isConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -242,5 +265,11 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
 
+    }
+
+    @Override
+    protected void onDestroy(){
+        compositeDisposable.clear();
+        super.onDestroy();
     }
 }

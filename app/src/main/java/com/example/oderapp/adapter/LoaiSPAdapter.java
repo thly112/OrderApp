@@ -55,9 +55,10 @@ public class LoaiSPAdapter extends BaseAdapter {
             view.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) view.getTag();
-            viewHolder.txttensp.setText(array.get(i).getTensp());
-            Glide.with(context).load(array.get(i).getHinhanh()).into(viewHolder.imghinhanh);
         }
+        viewHolder.txttensp.setText(array.get(i).getTensp());
+        Glide.with(context).load(array.get(i).getHinhanh()).into(viewHolder.imghinhanh);
+
         return view;
 
 

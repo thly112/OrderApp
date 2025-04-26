@@ -17,6 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
             android:name=".activity.TraActivity"
             android:exported="false" />
         <activity
@@ -41,12 +42,37 @@
         <activity
             android:name=".activity.Splash_Screen"
             android:exported="true" >
+=======
+            android:name=".activity.BanhActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DoUongActivity"
+            android:exported="false"
+            android:label="@string/title_activity_do_uong"
+            android:theme="@style/Theme.OderApp" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true">
+>>>>>>> be69519d00a4da9e1bbccc2cc6738e3de4e05743
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+<<<<<<< HEAD
+=======
+            android:name=".activity.SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.StartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.Splash_Screen"
+            android:exported="true" />
+        <activity
+>>>>>>> be69519d00a4da9e1bbccc2cc6738e3de4e05743
             android:name=".activity.LoginActivity"
             android:exported="true" />
     </application>
