@@ -17,29 +17,38 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.TraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.TraSuaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CaPheActivity"
             android:exported="true">
 
+        </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".activity.SignupActivity"
+            android:exported="false" >
+        </activity>
+        <activity
+            android:name=".activity.StartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.Splash_Screen"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SignupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.StartActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.Splash_Screen"
-            android:exported="true">
-
-        </activity>
-        <activity
             android:name=".activity.LoginActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

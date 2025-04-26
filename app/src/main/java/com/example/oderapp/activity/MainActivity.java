@@ -1,12 +1,15 @@
 package com.example.oderapp.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -63,15 +66,42 @@ public class MainActivity extends AppCompatActivity {
         if(isConnected(this)){
             Toast.makeText(getApplicationContext(), "ok", Toast.LENGTH_LONG).show();
             ActionViewFlipper();
-//            getLoaiSanPham();
+            getLoaiSanPham();
 //            getSpMoi();
-            fakeLoaiSP();
+//            fakeLoaiSP();
             fakeSpMoi();
+            getEventClick();
 
 
         }else{
             Toast.makeText(getApplicationContext(), "khong co internet", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void getEventClick() {
+        listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+                switch (i) {
+                    case 0:
+                        Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(trangchu);
+                        break;
+                    case 1:
+                        Intent caphe = new Intent(getApplicationContext(), CaPheActivity.class);
+                        startActivity(caphe);
+                        break;
+                    case 2:
+                        Intent trasua = new Intent(getApplicationContext(), TraSuaActivity.class);
+                        startActivity(trasua);
+                        break;
+                    case 3:
+                        Intent tra = new Intent(getApplicationContext(), TraActivity.class);
+                        startActivity(tra);
+                        break;
+                }
+            }
+        });
     }
 
     private void getSpMoi() {
@@ -133,16 +163,16 @@ public class MainActivity extends AppCompatActivity {
         ));
 
     }
-    private void fakeLoaiSP() {
-        mangloaisp.clear();
-        mangloaisp.add(new LoaiSP(1, "Giày Thể Thao", "https://bit.ly/loaigiay1"));
-        mangloaisp.add(new LoaiSP(2, "Giày Tây", "https://bit.ly/loaigiay2"));
-        mangloaisp.add(new LoaiSP(3, "Giày Sandal", "https://bit.ly/loaigiay3"));
-        mangloaisp.add(new LoaiSP(4, "Phụ Kiện", "https://bit.ly/phukien1"));
-        mangloaisp.add(new LoaiSP(5, "Khuyến Mãi", "https://bit.ly/khuyenmai1"));
-
-        loaiSPAdapter.notifyDataSetChanged(); // cập nhật lại ListView
-    }
+//    private void fakeLoaiSP() {
+//        mangloaisp.clear();
+//        mangloaisp.add(new LoaiSP(1, "Giày Thể Thao", "https://bit.ly/loaigiay1"));
+//        mangloaisp.add(new LoaiSP(2, "Giày Tây", "https://bit.ly/loaigiay2"));
+//        mangloaisp.add(new LoaiSP(3, "Giày Sandal", "https://bit.ly/loaigiay3"));
+//        mangloaisp.add(new LoaiSP(4, "Phụ Kiện", "https://bit.ly/phukien1"));
+//        mangloaisp.add(new LoaiSP(5, "Khuyến Mãi", "https://bit.ly/khuyenmai1"));
+//
+//        loaiSPAdapter.notifyDataSetChanged(); // cập nhật lại ListView
+//    }
 
 
     private void ActionViewFlipper() {
