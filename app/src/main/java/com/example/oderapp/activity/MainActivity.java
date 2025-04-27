@@ -67,19 +67,10 @@ public class MainActivity extends AppCompatActivity {
         if(isConnected(this)){
             ActionViewFlipper();
             getLoaiSanPham();
-<<<<<<< HEAD
-//            getSpMoi();
-//            fakeLoaiSP();
-            fakeSpMoi();
-            getEventClick();
-=======
             getSpMoi();
             getEventClick();
 //            fakeLoaiSP();
 //            fakeSpMoi();
->>>>>>> be69519d00a4da9e1bbccc2cc6738e3de4e05743
-
-
         }else{
             Toast.makeText(getApplicationContext(), "khong co internet", Toast.LENGTH_LONG).show();
         }
@@ -88,38 +79,22 @@ public class MainActivity extends AppCompatActivity {
     private void getEventClick() {
         listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-<<<<<<< HEAD
-            public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
-                switch (i) {
-=======
+
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i){
->>>>>>> be69519d00a4da9e1bbccc2cc6738e3de4e05743
                     case 0:
                         Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(trangchu);
                         break;
                     case 1:
-<<<<<<< HEAD
-                        Intent caphe = new Intent(getApplicationContext(), CaPheActivity.class);
-                        startActivity(caphe);
-                        break;
-                    case 2:
-                        Intent trasua = new Intent(getApplicationContext(), TraSuaActivity.class);
-                        startActivity(trasua);
-                        break;
-                    case 3:
-                        Intent tra = new Intent(getApplicationContext(), TraActivity.class);
-                        startActivity(tra);
-=======
                         Intent douong = new Intent(getApplicationContext(), DoUongActivity.class);
                         douong.putExtra("loai",1);
                         startActivity(douong);
                         break;
                     case 2:
-                        Intent banh = new Intent(getApplicationContext(), BanhActivity.class);
+                        Intent banh = new Intent(getApplicationContext(), DoUongActivity.class);
+                        banh.putExtra("loai",2);
                         startActivity(banh);
->>>>>>> be69519d00a4da9e1bbccc2cc6738e3de4e05743
                         break;
                 }
             }

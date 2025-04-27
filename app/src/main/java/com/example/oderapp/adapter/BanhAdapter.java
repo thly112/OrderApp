@@ -21,22 +21,22 @@ import com.example.oderapp.model.SanPhamMoi;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class DoUongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class BanhAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     List<SanPhamMoi> array;
     private static final int VIEW_TYPE_DATA = 0;
     private static final int VIEW_TYPE_LOADING = 1;
-    public DoUongAdapter(Context context, List<SanPhamMoi> array) {
+
+    public BanhAdapter(Context context, List<SanPhamMoi> array) {
         this.context = context;
         this.array = array;
     }
-
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_DATA){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_douong, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_banh, parent, false);
             return new MyViewHolder(view);
         }else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
@@ -60,7 +60,6 @@ public class DoUongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 public void onClick(View view, int pos, boolean isLongClick) {
                     if(!isLongClick){
                         Intent intent = new Intent(context, ChiTietActivity.class);
-                        intent.putExtra("chitiet", sanPham);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     }
@@ -71,7 +70,6 @@ public class DoUongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             loadingViewHolder.progressBar.setIndeterminate(true);
         }
     }
-
     @Override
     public int getItemViewType(int position) {
         return array.get(position) == null ? VIEW_TYPE_LOADING:VIEW_TYPE_DATA; //Thay bang cau truc if cung duoc
@@ -90,30 +88,27 @@ public class DoUongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             progressBar = itemView.findViewById(R.id.progressbar);
         }
     }
-
-
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tensp, giasp, mota, idsp;
         ImageView hinhanh;
         private ItemClickListener itemClickListener;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tensp = itemView.findViewById(R.id.itemdu_ten);
-            giasp = itemView.findViewById(R.id.itemdu_gia);
-            mota = itemView.findViewById(R.id.itemdu_mota);
-            idsp = itemView.findViewById(R.id.itemdu_idsp);
-            hinhanh = itemView.findViewById(R.id.itemdu_image);
+            tensp = itemView.findViewById(R.id.item_ten);
+            giasp = itemView.findViewById(R.id.item_gia);
+            mota = itemView.findViewById(R.id.item_mota);
+            idsp = itemView.findViewById(R.id.item_idsp);
+            hinhanh = itemView.findViewById(R.id.item_image);
             itemView.setOnClickListener(this);
         }
-
         public void setItemClickListener(ItemClickListener itemClickListener) {
             this.itemClickListener = itemClickListener;
         }
-
         @Override
         public void onClick(View view) {
             itemClickListener.onClick(view, getAdapterPosition(), false);
         }
-    }
 
+    }
 }

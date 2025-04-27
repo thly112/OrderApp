@@ -62,7 +62,7 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/orange_bg"
+                    android:background="@drawable/addtocartshape"
                     android:text="Started"
                     android:textColor="@color/white"
                     android:textSize="18sp"
