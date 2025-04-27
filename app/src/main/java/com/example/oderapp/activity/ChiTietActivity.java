@@ -18,7 +18,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.oderapp.R;
+import com.example.oderapp.model.GioHang;
 import com.example.oderapp.model.SanPhamMoi;
+import com.example.oderapp.utils.Utils;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.text.DecimalFormat;
 
@@ -29,6 +32,8 @@ public class ChiTietActivity extends AppCompatActivity {
     ImageView imghinhanh;
     Spinner spinner;
     Toolbar toolbar;
+    SanPhamMoi sanPhamMoi;
+    NotificationBadge badge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +43,57 @@ public class ChiTietActivity extends AppCompatActivity {
         initView();
         ActionToolBar();
         initData();
+        initControl();
+    }
+
+    private void initControl() {
+        btnthem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                themGioHang();
+            }
+        });
+    }
+
+    private void themGioHang() {
+        if(Utils.mangGioHang.size() > 0){
+            boolean flag = false;
+            int soluong = Integer.parseInt(spinner.getSelectedItem().toString());
+            for (int i = 0; i < Utils.mangGioHang.size(); i++) {
+                if(Utils.mangGioHang.get(i).getIdsp() == sanPhamMoi.getId()){
+                    Utils.mangGioHang.get(i).setSoluong(soluong + Utils.mangGioHang.get(i).getSoluong());
+                    long gia = Long.parseLong(sanPhamMoi.getGiasp()) * Utils.mangGioHang.get(i).getSoluong();
+                    Utils.mangGioHang.get(i).setGiasp(gia);
+                    flag = true;
+                }
+            }
+            if (flag == false){
+                long gia = Long.parseLong(sanPhamMoi.getGiasp()) * soluong;
+                GioHang gioHang = new GioHang();
+                gioHang.setTensp(sanPhamMoi.getTensp());
+                gioHang.setIdsp(sanPhamMoi.getId());
+                gioHang.setHinhsp(sanPhamMoi.getHinhanh());
+                gioHang.setGiasp(gia);
+                gioHang.setSoluong(soluong);
+                Utils.mangGioHang.add(gioHang);
+            }
+
+        }else {
+            int soluong = Integer.parseInt(spinner.getSelectedItem().toString());
+            long gia = Integer.parseInt(sanPhamMoi.getGiasp()) * soluong;
+            GioHang gioHang = new GioHang();
+            gioHang.setTensp(sanPhamMoi.getTensp());
+            gioHang.setIdsp(sanPhamMoi.getId());
+            gioHang.setHinhsp(sanPhamMoi.getHinhanh());
+            gioHang.setGiasp(gia);
+            gioHang.setSoluong(soluong);
+            Utils.mangGioHang.add(gioHang);
+        }
+        badge.setText(String.valueOf(Utils.mangGioHang.size()));
     }
 
     private void initData() {
-        SanPhamMoi sanPhamMoi = (SanPhamMoi) getIntent().getSerializableExtra("chitiet");
+        sanPhamMoi = (SanPhamMoi) getIntent().getSerializableExtra("chitiet");
         tensp.setText(sanPhamMoi.getTensp());
         mota.setText(sanPhamMoi.getMota());
         Glide.with(getApplicationContext()).load(sanPhamMoi.getHinhanh()).into(imghinhanh);
@@ -61,6 +113,7 @@ public class ChiTietActivity extends AppCompatActivity {
         spinner = findViewById(R.id.spinner);
         imghinhanh = findViewById(R.id.imgchitiet);
         toolbar = findViewById(R.id.toolbar);
+        badge = findViewById(R.id.menu_sl);
     }
 
     private void ActionToolBar() {

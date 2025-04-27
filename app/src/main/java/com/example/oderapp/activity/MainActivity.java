@@ -224,11 +224,16 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerlayout);
         // khoi tao list
         mangloaisp = new ArrayList<>();
+
         // khoi tao adapter
 //        loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
 //        listViewManHinhChinh.setAdapter(loaiSPAdapter);
-        // khoi tao mang san pham moi
-//        mangSpMoi = new ArrayList<>();
+//         khoi tao mang san pham moi
+        mangSpMoi = new ArrayList<>();
+        if (Utils.mangGioHang == null) {
+            Utils.mangGioHang = new ArrayList<>();
+
+        }
     }
     private boolean isConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

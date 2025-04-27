@@ -69,7 +69,8 @@ dependencies {
     // Navigation Component
     implementation ("androidx.navigation:navigation-fragment:2.7.7")
     implementation ("androidx.navigation:navigation-ui:2.7.7")
-
+    //brade
+    implementation("com.nex3z:notification-badge:1.0.4")
     // Material
     implementation ("com.google.android.material:material:1.11.0")
     implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
@@ -77,4 +78,5 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+
 }
