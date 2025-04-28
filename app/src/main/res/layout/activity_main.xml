@@ -18,7 +18,26 @@
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" >
+        <FrameLayout
+            android:id="@+id/framegiohang"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="right"
+            android:layout_width="55dp"
+            android:layout_height="?attr/actionBarSize">
+            <com.nex3z.notificationbadge.NotificationBadge
+                android:id="@+id/menu_sl"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="top|right"
+                tools:ignore="MissingClass" />
+            <ImageView
+                android:layout_marginTop="15dp"
+                android:src="@drawable/cart"
+                android:layout_width="35dp"
+                android:layout_height="35dp"/>
+        </FrameLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <!-- DrawerLayout bắt đầu dưới Toolbar -->
     <androidx.drawerlayout.widget.DrawerLayout

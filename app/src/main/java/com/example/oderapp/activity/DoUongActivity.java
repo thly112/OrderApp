@@ -125,7 +125,7 @@ public class DoUongActivity extends AppCompatActivity {
                                 }
 
                             } else {
-                                Toast.makeText(getApplicationContext(), "Đã hết", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Đã hiển thị hết sản phẩm", Toast.LENGTH_LONG).show();
                                 isLoading = true;
                             }
                         },

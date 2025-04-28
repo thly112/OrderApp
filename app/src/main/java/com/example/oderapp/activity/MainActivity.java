@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.example.oderapp.retrofit.ApiBanHang;
 import com.example.oderapp.retrofit.RetrofitClient;
 import com.example.oderapp.utils.Utils;
 import com.google.android.material.navigation.NavigationView;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     ApiBanHang apiBanHang;
     List<SanPhamMoi> mangSpMoi;
     SanPhamMoiAdapter spAdapter;
+    NotificationBadge badge;
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
             getLoaiSanPham();
             getSpMoi();
             getEventClick();
-//            fakeLoaiSP();
-//            fakeSpMoi();
         }else{
             Toast.makeText(getApplicationContext(), "khong co internet", Toast.LENGTH_LONG).show();
         }
@@ -120,28 +122,6 @@ public class MainActivity extends AppCompatActivity {
             ));
     }
 
-//    private void fakeSpMoi() {
-//        mangSpMoi.add(new SanPhamMoi(
-//                1,
-//                "Menu 1",
-//                R.drawable.menu1,
-//                "2300000",
-//                "",
-//                1 // id loại sản phẩm
-//        ));
-//        mangSpMoi.add(new SanPhamMoi(
-//                2,
-//                "Menu 2",
-//                R.drawable.menu2,
-//                "2300000",
-//                "", // giá truyền dưới dạng String
-//                2 // id loại sản phẩm
-//        ));
-//
-//        spAdapter = new SanPhamMoiAdapter(getApplicationContext(), mangSpMoi);
-//        recyclerViewManHinhChinh.setAdapter(spAdapter);
-//    }
-
     private void getLoaiSanPham() {
         compositeDisposable.add(apiBanHang.getLoaiSP()
         .subscribeOn(Schedulers.io())
@@ -161,18 +141,6 @@ public class MainActivity extends AppCompatActivity {
         ));
 
     }
-//    private void fakeLoaiSP() {
-//        mangloaisp.clear();
-//        mangloaisp.add(new LoaiSP(1, "Giày Thể Thao", "https://bit.ly/loaigiay1"));
-//        mangloaisp.add(new LoaiSP(2, "Giày Tây", "https://bit.ly/loaigiay2"));
-//        mangloaisp.add(new LoaiSP(3, "Giày Sandal", "https://bit.ly/loaigiay3"));
-//        mangloaisp.add(new LoaiSP(4, "Phụ Kiện", "https://bit.ly/phukien1"));
-//        mangloaisp.add(new LoaiSP(5, "Khuyến Mãi", "https://bit.ly/khuyenmai1"));
-//
-//        loaiSPAdapter.notifyDataSetChanged(); // cập nhật lại ListView
-//    }
-
-
     private void ActionViewFlipper() {
         List<String> mangquangcao = new ArrayList<>();
         mangquangcao.add("https://res.cloudinary.com/ds1rgnuvr/image/upload/v1744212311/2d009ced-6f4b-4d2a-9d04-60751cd82e04.png");
@@ -222,18 +190,38 @@ public class MainActivity extends AppCompatActivity {
         listViewManHinhChinh = findViewById(R.id.listviewmanhinhchinh);
         navigationView = findViewById(R.id.navigationview);
         drawerLayout = findViewById(R.id.drawerlayout);
+        badge = findViewById(R.id.menu_sl);
+        frameLayout = findViewById(R.id.framegiohang);
         // khoi tao list
         mangloaisp = new ArrayList<>();
 
-        // khoi tao adapter
-//        loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
-//        listViewManHinhChinh.setAdapter(loaiSPAdapter);
-//         khoi tao mang san pham moi
         mangSpMoi = new ArrayList<>();
         if (Utils.mangGioHang == null) {
             Utils.mangGioHang = new ArrayList<>();
-
+        }else {
+            int totalItem = 0;
+            for (int i = 0; i<Utils.mangGioHang.size(); i++) {
+                totalItem = totalItem + Utils.mangGioHang.get(i).getSoluong();
+            }
+            badge.setText(String.valueOf(totalItem));
         }
+        frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent giohang = new Intent(getApplicationContext(), GioHangActivity.class);
+                startActivity(giohang);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        int totalItem = 0;
+        for (int i = 0; i<Utils.mangGioHang.size(); i++) {
+            totalItem = totalItem + Utils.mangGioHang.get(i).getSoluong();
+        }
+        badge.setText(String.valueOf(totalItem));
     }
     private boolean isConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
