@@ -150,4 +150,17 @@ public class ChiTietActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Utils.mangGioHang != null){
+            int totalItem = 0;
+            for (int i = 0; i<Utils.mangGioHang.size(); i++)
+            {
+                totalItem = totalItem + Utils.mangGioHang.get(i).getSoluong();
+            }
+            badge.setText(String.valueOf(totalItem));
+        }
+    }
 }

@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/username"
         android:layout_width="325dp"
         android:layout_height="55dp"
         android:layout_marginTop="16dp"
@@ -76,7 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/email"
         android:layout_width="325dp"
         android:layout_height="55dp"
         android:layout_marginTop="12dp"
@@ -88,13 +88,13 @@
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/editText2"
+        app:layout_constraintEnd_toEndOf="@+id/username"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/editText2"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintStart_toStartOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/pass"
         android:layout_width="325dp"
         android:layout_height="55dp"
         android:layout_marginTop="12dp"
@@ -106,8 +106,8 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
+        app:layout_constraintEnd_toEndOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <TextView
         android:id="@+id/textView7"
@@ -116,10 +116,10 @@
         android:layout_marginTop="16dp"
         android:text="Or"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
+        app:layout_constraintEnd_toEndOf="@+id/pass"
         app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintStart_toStartOf="@+id/pass"
+        app:layout_constraintTop_toBottomOf="@+id/pass" />
 
     <TextView
         android:id="@+id/textView8"

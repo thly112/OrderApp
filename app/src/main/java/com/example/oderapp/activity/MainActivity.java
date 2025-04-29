@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar();
         ActionViewFlipper();
         if(isConnected(this)){
-            ActionViewFlipper();
+//            ActionViewFlipper();
             getLoaiSanPham();
             getSpMoi();
             getEventClick();
@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                         banh.putExtra("loai",2);
                         startActivity(banh);
                         break;
+
                 }
             }
         });
@@ -182,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
     private void Anhxa() {
         toolbar = findViewById(R.id.toolbarmanhinhchinh);
         viewFlipper = findViewById(R.id.viewflipper);
-        recyclerViewManHinhChinh = findViewById(R.id.recycleview);
         recyclerViewManHinhChinh = findViewById(R.id.recycleview);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,1);
         recyclerViewManHinhChinh.setLayoutManager(layoutManager);

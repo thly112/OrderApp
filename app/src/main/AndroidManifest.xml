@@ -22,11 +22,9 @@
         <activity
             android:name=".activity.ChiTietActivity"
             android:exported="false"
-            android:theme="@style/Theme.OderApp"></activity>
-        <activity
-            android:name=".activity.BanhActivity"
-            android:exported="false"
-            android:theme="@style/Theme.OderApp" />
+            android:theme="@style/Theme.OderApp">
+        </activity>
+
         <activity
             android:name=".activity.DoUongActivity"
             android:exported="false"
@@ -34,16 +32,17 @@
             android:theme="@style/Theme.OderApp" />
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.SignupActivity"
-            android:exported="false" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.StartActivity"
             android:exported="false" />
