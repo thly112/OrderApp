@@ -51,21 +51,24 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void dangKi() {
-        String email = this.email.getText().toString().trim();
-        String pass = this.pass.getText().toString().trim();
-        String username = this.username.getText().toString().trim();
-        if (email.isEmpty() || pass.isEmpty() || username.isEmpty()) {
+        String stremail = this.email.getText().toString().trim();
+        String strpass = this.pass.getText().toString().trim();
+        String strusername = this.username.getText().toString().trim();
+        if (stremail.isEmpty() || strpass.isEmpty() || strusername.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         } else {
-            compositeDisposable.add(apiBanHang.dangKi(email, pass, username)
+            compositeDisposable.add(apiBanHang.dangKi(stremail, strpass, strusername)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             userModel -> {
                                 if(userModel.isSuccess()){
-                                    Toast.makeText(getApplicationContext(), "Thanh cong", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getApplicationContext(), "Thanh cong", Toast.LENGTH_SHORT).show();
+                                    Utils.user_current.setEmail(stremail);
+                                    Utils.user_current.setPass(strpass);
                                     Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                                     startActivity(intent);
+                                    finish();
 
                                 } else {
                                     Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();

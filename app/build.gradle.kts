@@ -81,5 +81,8 @@ dependencies {
     debugImplementation(libs.ui.test.manifest)
     // even bus
     implementation("org.greenrobot:eventbus:3.2.0")
+    //paper
+    implementation ("io.github.pilgr:paperdb:2.7.2")
+
 
 }
