@@ -1,9 +1,12 @@
 package com.example.oderapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +22,7 @@ import com.example.oderapp.adapter.GioHangAdapter;
 import com.example.oderapp.model.EventBus.TinhTongEvent;
 import com.example.oderapp.model.GioHang;
 import com.example.oderapp.utils.Utils;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,6 +37,7 @@ public class GioHangActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Button btnmuahang;
     GioHangAdapter adapter;
+    long tongtiensp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +49,8 @@ public class GioHangActivity extends AppCompatActivity {
     }
 
     private void tinhTongTien() {
-        long tongtiensp = 0;
-        for (int i = 0; i<Utils.mangGioHang.size(); i++){
+        tongtiensp = 0;
+        for (int i = 0; i < Utils.mangGioHang.size(); i++){
             tongtiensp = tongtiensp + (Utils.mangGioHang.get(i).getGiasp() * Utils.mangGioHang.get(i).getSoluong());
         }
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
@@ -64,12 +69,26 @@ public class GioHangActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        adapter = new GioHangAdapter(getApplicationContext(), Utils.mangGioHang);
+        recyclerView.setAdapter(adapter);
+
         if (Utils.mangGioHang.size() == 0){
+            Toast.makeText(this, "Giỏ hàng trống", Toast.LENGTH_SHORT).show();
             giohangtrong.setVisibility(View.VISIBLE);
-        }else {
-            adapter = new GioHangAdapter(getApplicationContext(), Utils.mangGioHang);
-            recyclerView.setAdapter(adapter);
+        } else {
+            giohangtrong.setVisibility(View.GONE);
         }
+        Log.d("GioHang", "So luong san pham: " + Utils.mangGioHang.size());
+
+        btnmuahang.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), ThanhToanActivity.class);
+                intent.putExtra("tongtien", tongtiensp);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView() {
