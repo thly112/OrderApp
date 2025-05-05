@@ -65,24 +65,24 @@ dependencies {
     implementation (libs.rxjava)
     // Retrofit
     implementation (libs.retrofit)
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation (libs.converter.gson)
     implementation (libs.rxjava3.retrofit.adapter)
     // Navigation Component
-    implementation ("androidx.navigation:navigation-fragment:2.7.7")
-    implementation ("androidx.navigation:navigation-ui:2.7.7")
+    implementation (libs.navigation.fragment.v277)
+    implementation (libs.navigation.ui.v277)
     //brade
-    implementation ("com.nex3z:notification-badge:1.0.4")
+    implementation (libs.notification.badge)
     // Material
-    implementation ("com.google.android.material:material:1.11.0")
-    implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
+    implementation (libs.material.v1110)
+    implementation (libs.imageslideshow)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
     // even bus
-    implementation("org.greenrobot:eventbus:3.2.0")
+    implementation(libs.eventbus)
     //paper
-    implementation ("io.github.pilgr:paperdb:2.7.2")
-    implementation ("com.google.code.gson:gson:2.13.1")
+    implementation (libs.paperdb)
+    implementation (libs.gson)
 
 }

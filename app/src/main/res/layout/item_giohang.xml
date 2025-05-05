@@ -94,6 +94,12 @@
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
+            <CheckBox
+                android:padding="5dp"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/item_giohang_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
 

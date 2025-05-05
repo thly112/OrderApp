@@ -2,6 +2,7 @@ package com.example.oderapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText email, pass;
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+    boolean isLogin = false;
 
 
     @Override
@@ -41,31 +43,15 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String stremail = email.getText().toString().trim();
-                String strpass = pass.getText().toString().trim();
-                if (stremail.isEmpty() || strpass.isEmpty()) {
+                String str_email = email.getText().toString().trim();
+                String str_pass = pass.getText().toString().trim();
+                if (str_email.isEmpty() || str_pass.isEmpty()) {
                     Toast.makeText(v.getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 } else {
                     //Save
-                    Paper.book().write("email", stremail);
-                    Paper.book().write("pass", strpass);
-                    compositeDisposable.add(apiBanHang.dangKi(stremail, strpass)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    userModel -> {
-                                        if (userModel.isSuccess()) {
-                                            Utils.user_current = userModel.getResult().get(0);
-                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        } else {
-                                        }
-                                    },
-                                    throwable -> {
-                                        Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                            ));
+                    Paper.book().write("email", str_email);
+                    Paper.book().write("pass", str_pass);
+                    dangNhap(str_email, str_pass);
                 }
 
             }
@@ -78,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        binding.btnResetPass.setOnClickListener(new View.OnClickListener() {
+        binding.btnForgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, ResetPassActivity.class);
@@ -97,7 +83,44 @@ public class LoginActivity extends AppCompatActivity {
         if(Paper.book().read("email") != null && Paper.book().read("pass") != null){
             email.setText(Paper.book().read("email"));
             pass.setText(Paper.book().read("pass"));
+            if (Paper.book().read("islogin")!= null){
+                boolean flag = Paper.book().read("islogin");
+                if (flag){
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //dangNhap(Paper.book().read("email"), Paper.book().read("pass"));
+                        }
+                    }, 1);
+                }
+            }
         }
+    }
+
+    private void dangNhap(String email, String pass) {
+        compositeDisposable.add(apiBanHang.dangNhap(email, pass)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                userModel -> {
+                                    if (userModel.isSuccess()) {
+                                        isLogin = true;
+                                        Paper.book().write("islogin", isLogin);
+                                        Utils.user_current = userModel.getResult().get(0);
+                                        // luu lai thong tin nguoi dung
+                                        Paper.book().write("user", userModel.getResult().get(0));
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Email hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+                                    }
+                                },
+                                throwable -> {
+                                    Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                        ));
+
     }
 
     protected void onResume() {

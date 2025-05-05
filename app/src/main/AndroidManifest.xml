@@ -17,6 +17,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LichSuActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ThanhToanActivity"
             android:exported="false" />
         <activity
@@ -38,7 +44,15 @@
             android:name=".activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.SignupActivity"
+            android:name=".activity.LoginActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".activity.StartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.Splash_Screen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,13 +61,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.StartActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.Splash_Screen"
-            android:exported="true" />
-        <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.SignupActivity"
             android:exported="true" />
     </application>
 

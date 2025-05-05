@@ -1,6 +1,8 @@
 package com.example.oderapp.retrofit;
 
 import io.reactivex.rxjava3.core.Observable;
+
+import com.example.oderapp.model.DonHangModel;
 import com.example.oderapp.model.LoaiSPModel;
 import com.example.oderapp.model.SanPhamMoi;
 import com.example.oderapp.model.SanPhamMoiModel;
@@ -37,8 +39,39 @@ public interface ApiBanHang {
 
     @POST("dangnhap.php")
     @FormUrlEncoded
-    Observable<UserModel> dangKi(
+    Observable<UserModel> dangNhap(
             @Field("email") String email,
             @Field("pass") String pass
+    );
+
+    @POST("reset.php")
+    @FormUrlEncoded
+    Observable<UserModel> resetPass(
+            @Field("email") String email
+    );
+
+    @POST("donhang.php")
+    @FormUrlEncoded
+    Observable<UserModel> createOrder(
+            @Field("email") String email,
+            @Field("sdt") String sdt,
+            @Field("tongtien") String tongtien,
+            @Field("iduser") int id,
+            @Field("diachi") String diachi,
+            @Field("soluong") int soluong,
+            @Field("chitiet") String chitiet
+
+    );
+
+    @POST("xemdonhang.php")
+    @FormUrlEncoded
+    Observable<DonHangModel> xemDonHang(
+            @Field("iduser") int id
+    );
+
+    @POST("timkiem.php")
+    @FormUrlEncoded
+    Observable<SanPhamMoiModel> search(
+            @Field("search") String search
     );
 }

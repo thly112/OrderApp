@@ -2,7 +2,7 @@ package com.example.oderapp.model;
 
 public class User {
     int id;
-    String email, pass, username;
+    String email, pass, username, mobile;
 
     public int getId() {
         return id;
@@ -36,4 +36,11 @@ public class User {
         this.username = username;
     }
 
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 }

@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,6 +53,23 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
         holder.item_giohang_gia.setText(decimalFormat.format((gioHang.getGiasp())));
         long gia = gioHang.getSoluong() * gioHang.getGiasp();
         holder.item_giohang_giasp2.setText(decimalFormat.format(gia));
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    Utils.mangMuaHang.add(gioHang);
+                    EventBus.getDefault().postSticky(new TinhTongEvent());
+                }else {
+                    for (int i = 0; i<Utils.mangMuaHang.size(); i++){
+                        if (Utils.mangMuaHang.get(i).getIdsp() == gioHang.getIdsp()){
+                            Utils.mangMuaHang.remove(i);
+                            EventBus.getDefault().postSticky(new TinhTongEvent());
+                        }
+
+                    }
+                }
+            }
+        });
         holder.setListenner(new IImageClickListenner() {
             @Override
             public void onImageClick(View view, int pos, int giatri) {
@@ -108,6 +127,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
         ImageView item_giohang_image, imggiam, imgtang;
         TextView item_giohang_tensp, item_giohang_gia,item_giohang_soluong,item_giohang_giasp2;
         IImageClickListenner listenner;
+        CheckBox checkBox;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             item_giohang_image = itemView.findViewById(R.id.item_giohang_image);
@@ -117,6 +137,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
             item_giohang_giasp2= itemView.findViewById(R.id.item_giohang_giasp2);
             imggiam= itemView.findViewById(R.id.item_giohang_tru);
             imgtang= itemView.findViewById(R.id.item_giohang_cong );
+            checkBox = itemView.findViewById(R.id.item_giohang_cb);
             //event click
             imgtang.setOnClickListener(this);
             imggiam.setOnClickListener(this);

@@ -48,6 +48,13 @@ public class SignupActivity extends AppCompatActivity {
                 dangKi();
             }
         });
+        binding.btnHave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void dangKi() {
@@ -62,13 +69,16 @@ public class SignupActivity extends AppCompatActivity {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             userModel -> {
-                                if(userModel.isSuccess()){
-//                                    Toast.makeText(getApplicationContext(), "Thanh cong", Toast.LENGTH_SHORT).show();
-                                    Utils.user_current.setEmail(stremail);
-                                    Utils.user_current.setPass(strpass);
-                                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                if (userModel.isSuccess()) {
+                                    Toast.makeText(SignupActivity.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
+
+                                    new android.os.Handler().postDelayed(() -> {
+                                        Utils.user_current.setEmail(stremail);
+                                        Utils.user_current.setPass(strpass);
+                                        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }, 1500);
 
                                 } else {
                                     Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
@@ -78,16 +88,8 @@ public class SignupActivity extends AppCompatActivity {
                                 Toast.makeText(this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                     ));
-
         }
 
-        binding.btnHave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void initView() {
