@@ -72,7 +72,6 @@ public class SignupActivity extends AppCompatActivity {
         if (stremail.isEmpty() || strpass.isEmpty() || strusername.isEmpty() || strsdt.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         } else {
-<<<<<<< HEAD
             firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.createUserWithEmailAndPassword(stremail, strpass)
                     .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
@@ -81,7 +80,7 @@ public class SignupActivity extends AppCompatActivity {
                             if(task.isSuccessful()) {
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
                                 if(user != null){
-                                    postData(stremail, strpass, strusername, user.getUid());
+                                    postData(stremail, strpass, strusername, strsdt, user.getUid());
                                 }
                                 else{
                                     Toast.makeText(getApplicationContext(), "Email đã tồn tại", Toast.LENGTH_SHORT).show();
@@ -93,23 +92,14 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-    private void postData(String stremail, String strpass, String strusername, String uid) {
-        compositeDisposable.add(apiBanHang.dangKi(stremail, strpass, strusername, uid)
+    private void postData(String stremail, String strpass, String strusername, String strsdt, String uid) {
+        compositeDisposable.add(apiBanHang.dangKi(stremail, strpass, strusername, strsdt, uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         userModel -> {
                             if (userModel.isSuccess()) {
-=======
-            compositeDisposable.add(apiBanHang.dangKi(stremail, strpass, strusername, strsdt)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            userModel -> {
-                                if (userModel.isSuccess()) {
->>>>>>> remotes/origin/di
                                     Toast.makeText(SignupActivity.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
-
                                     new android.os.Handler().postDelayed(() -> {
                                         Utils.user_current.setEmail(stremail);
                                         Utils.user_current.setPass(strpass);

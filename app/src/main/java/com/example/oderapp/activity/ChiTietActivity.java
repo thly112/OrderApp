@@ -94,9 +94,10 @@ public class ChiTietActivity extends AppCompatActivity {
             startActivity(intent);
             return;
         }
-        if(Utils.mangGioHang.size() > 0){
+        int soluong = Integer.parseInt(numberItemTxt.getText().toString());
+
+        if (Utils.mangGioHang.size() > 0) {
             boolean flag = false;
-            int soluong = Integer.parseInt(spinner.getSelectedItem().toString());
             for (int i = 0; i < Utils.mangGioHang.size(); i++) {
                 if (Utils.mangGioHang.get(i).getIdsp() == (sanPhamMoi.getId())) {
                     Utils.mangGioHang.get(i).setSoluong(soluong + Utils.mangGioHang.get(i).getSoluong());
@@ -106,7 +107,6 @@ public class ChiTietActivity extends AppCompatActivity {
                     break;
                 }
             }
-
             if (!flag) {
                 long gia = Long.parseLong(sanPhamMoi.getGiasp()) * soluong;
                 GioHang gioHang = new GioHang();
@@ -117,7 +117,7 @@ public class ChiTietActivity extends AppCompatActivity {
                 gioHang.setSoluong(soluong);
                 Utils.mangGioHang.add(gioHang);
             }
-            int soluong = Integer.parseInt(spinner.getSelectedItem().toString());
+        } else {
             long gia = Integer.parseInt(sanPhamMoi.getGiasp()) * soluong;
             GioHang gioHang = new GioHang();
             gioHang.setTensp(sanPhamMoi.getTensp());
