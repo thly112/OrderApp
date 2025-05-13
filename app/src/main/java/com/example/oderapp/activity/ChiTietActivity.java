@@ -30,10 +30,10 @@ import com.nex3z.notificationbadge.NotificationBadge;
 import java.text.DecimalFormat;
 
 public class ChiTietActivity extends AppCompatActivity {
-
     TextView tensp, giasp, mota, numberItemTxt, minusCart, plusCart;
     Button btnthem;
     ImageView imghinhanh;
+
     Toolbar toolbar;
     SanPhamMoi sanPhamMoi;
     NotificationBadge badge;
@@ -87,10 +87,16 @@ public class ChiTietActivity extends AppCompatActivity {
     }
 
     private void themGioHang() {
-        int soluong = Integer.parseInt(numberItemTxt.getText().toString());
-
-        if (Utils.mangGioHang.size() > 0) {
+        //Guests
+        if (Utils.user_current == null) {
+            Intent intent = new Intent(ChiTietActivity.this, LoginActivity.class);
+            Toast.makeText(this, "Vui lòng đăng nhập để thêm sản phẩm vào giỏ", Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+            return;
+        }
+        if(Utils.mangGioHang.size() > 0){
             boolean flag = false;
+            int soluong = Integer.parseInt(spinner.getSelectedItem().toString());
             for (int i = 0; i < Utils.mangGioHang.size(); i++) {
                 if (Utils.mangGioHang.get(i).getIdsp() == (sanPhamMoi.getId())) {
                     Utils.mangGioHang.get(i).setSoluong(soluong + Utils.mangGioHang.get(i).getSoluong());
@@ -100,6 +106,7 @@ public class ChiTietActivity extends AppCompatActivity {
                     break;
                 }
             }
+
             if (!flag) {
                 long gia = Long.parseLong(sanPhamMoi.getGiasp()) * soluong;
                 GioHang gioHang = new GioHang();
@@ -110,7 +117,7 @@ public class ChiTietActivity extends AppCompatActivity {
                 gioHang.setSoluong(soluong);
                 Utils.mangGioHang.add(gioHang);
             }
-        } else {
+            int soluong = Integer.parseInt(spinner.getSelectedItem().toString());
             long gia = Integer.parseInt(sanPhamMoi.getGiasp()) * soluong;
             GioHang gioHang = new GioHang();
             gioHang.setTensp(sanPhamMoi.getTensp());
@@ -136,7 +143,8 @@ public class ChiTietActivity extends AppCompatActivity {
         Glide.with(getApplicationContext()).load(sanPhamMoi.getHinhanh()).into(imghinhanh);
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         giasp.setText("Giá: "+decimalFormat.format(Double.parseDouble(sanPhamMoi.getGiasp()))+"đ");
-        Integer[] so = new Integer[]{1,2,3,4,5,6,7,8,9,10};
+
+      
 
     }
 
@@ -145,6 +153,7 @@ public class ChiTietActivity extends AppCompatActivity {
         giasp = findViewById(R.id.txtgiasp);
         mota = findViewById(R.id.txtmotachitiet);
         btnthem = findViewById(R.id.btnthemvaogio);
+
         imghinhanh = findViewById(R.id.imgchitiet);
         toolbar = findViewById(R.id.toolbar);
         badge = findViewById(R.id.menu_sl);

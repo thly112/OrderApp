@@ -35,8 +35,8 @@ public interface ApiBanHang {
             @Field("email") String email,
             @Field("pass") String pass,
             @Field("username") String username,
+            @Field("mobile") String sdt,
             @Field("uid") String uid
-
     );
 
     @POST("dangnhap.php")
