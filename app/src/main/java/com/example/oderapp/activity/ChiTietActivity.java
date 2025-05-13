@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,6 +60,13 @@ public class ChiTietActivity extends AppCompatActivity {
     }
 
     private void themGioHang() {
+        //Guests
+        if (Utils.user_current == null) {
+            Intent intent = new Intent(ChiTietActivity.this, LoginActivity.class);
+            Toast.makeText(this, "Vui lòng đăng nhập để thêm sản phẩm vào giỏ", Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+            return;
+        }
         if(Utils.mangGioHang.size() > 0){
             boolean flag = false;
             int soluong = Integer.parseInt(spinner.getSelectedItem().toString());

@@ -121,46 +121,33 @@
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
-            android:layout_width="152dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/whitebutton"
-            android:drawableLeft="@drawable/google"
-            android:paddingLeft="15dp"
-            android:text="Google"
-            android:textAllCaps="false"
-            app:layout_constraintEnd_toStartOf="@+id/button2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button2"
-            android:layout_width="152dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/whitebutton"
-            android:drawableLeft="@drawable/facebook"
-            android:paddingLeft="15dp"
-            android:text="Facebook"
-            android:textAllCaps="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnLogin"
             android:layout_width="152dp"
             android:layout_height="55dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/orange_bg"
+            android:drawableLeft="@drawable/isuser"
+            android:paddingLeft="15dp"
             android:text="Login"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.508"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toStartOf="@+id/btnGuests"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGuests"
+            android:layout_width="152dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/whitebutton"
+            android:drawableLeft="@drawable/notuser"
+            android:paddingLeft="15dp"
+            android:text="Guests"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnLogin"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
 
         <TextView
             android:id="@+id/btnDontHave"

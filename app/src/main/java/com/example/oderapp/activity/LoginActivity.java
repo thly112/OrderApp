@@ -57,6 +57,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        binding.btnGuests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.user_current = null; // Gán null để biết đây là tài khoản khách
+                Paper.book().write("islogin", false); // không lưu trạng thái đăng nhập
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         binding.btnDontHave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
-        if (Utils.user_current.getEmail() != null && Utils.user_current.getPass() != null) {
+        if (Utils.user_current != null && Utils.user_current.getEmail() != null && Utils.user_current.getPass() != null) {
             email.setText(Utils.user_current.getEmail());
             pass.setText(Utils.user_current.getPass());
         }

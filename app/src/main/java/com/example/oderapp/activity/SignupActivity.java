@@ -27,7 +27,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SignupActivity extends AppCompatActivity {
     private ActivitySignupBinding binding;
-    EditText email, pass, username;
+    EditText email, pass, username, sdt;
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -61,10 +61,11 @@ public class SignupActivity extends AppCompatActivity {
         String stremail = this.email.getText().toString().trim();
         String strpass = this.pass.getText().toString().trim();
         String strusername = this.username.getText().toString().trim();
-        if (stremail.isEmpty() || strpass.isEmpty() || strusername.isEmpty()) {
+        String strsdt = this.sdt.getText().toString().trim();
+        if (stremail.isEmpty() || strpass.isEmpty() || strusername.isEmpty() || strsdt.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         } else {
-            compositeDisposable.add(apiBanHang.dangKi(stremail, strpass, strusername)
+            compositeDisposable.add(apiBanHang.dangKi(stremail, strpass, strusername, strsdt)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -97,6 +98,7 @@ public class SignupActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         pass = findViewById(R.id.pass);
         username = findViewById(R.id.username);
+        sdt = findViewById(R.id.phone);
     }
     protected void onDestroy() {
         compositeDisposable.clear();

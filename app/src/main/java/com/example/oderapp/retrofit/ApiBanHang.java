@@ -33,8 +33,8 @@ public interface ApiBanHang {
     Observable<UserModel> dangKi(
             @Field("email") String email,
             @Field("pass") String pass,
-            @Field("username") String username
-
+            @Field("username") String username,
+            @Field("mobile") String sdt
     );
 
     @POST("dangnhap.php")
