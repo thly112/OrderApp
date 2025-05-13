@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.oderapp.R;
@@ -15,6 +16,11 @@ import com.example.oderapp.databinding.ActivitySignupBinding;
 import com.example.oderapp.retrofit.ApiBanHang;
 import com.example.oderapp.retrofit.RetrofitClient;
 import com.example.oderapp.utils.Utils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -25,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     EditText email, pass;
     ApiBanHang apiBanHang;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     boolean isLogin = false;
 
@@ -51,7 +59,22 @@ public class LoginActivity extends AppCompatActivity {
                     //Save
                     Paper.book().write("email", str_email);
                     Paper.book().write("pass", str_pass);
-                    dangNhap(str_email, str_pass);
+                    if (user != null) {
+                        //user da dang nhap fireabse
+                        dangNhap(str_email, str_pass);
+                    } else {
+                        //user da signout
+                        firebaseAuth.signInWithEmailAndPassword(str_email, str_pass)
+                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if(task.isSuccessful()) {
+                                            dangNhap(str_email, str_pass);
+                                        }
+                                    }
+                                });
+
+                    }
                 }
 
             }
@@ -78,6 +101,8 @@ public class LoginActivity extends AppCompatActivity {
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
         email = findViewById(R.id.txtemail);
         pass = findViewById(R.id.txtpass);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
 
         //read data
         if(Paper.book().read("email") != null && Paper.book().read("pass") != null){
@@ -89,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            //dangNhap(Paper.book().read("email"), Paper.book().read("pass"));
+                            dangNhap(Paper.book().read("email"), Paper.book().read("pass"));
                         }
                     }, 1);
                 }

@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,13 +31,13 @@ import java.text.DecimalFormat;
 
 public class ChiTietActivity extends AppCompatActivity {
 
-    TextView tensp, giasp, mota;
+    TextView tensp, giasp, mota, numberItemTxt, minusCart, plusCart;
     Button btnthem;
     ImageView imghinhanh;
-    Spinner spinner;
     Toolbar toolbar;
     SanPhamMoi sanPhamMoi;
     NotificationBadge badge;
+    ImageView ivBack, ivCart, ivFavourite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +45,39 @@ public class ChiTietActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_chi_tiet);
         initView();
-        ActionToolBar();
+//        ActionToolBar();
         initData();
         initControl();
     }
 
     private void initControl() {
+        ivBack.setOnClickListener(v -> finish());
+
+        ivCart.setOnClickListener(v -> {
+            Toast.makeText(this, "Mở giỏ hàng", Toast.LENGTH_SHORT).show();
+            // Chuyển sang Activity giỏ hàng nếu có
+             startActivity(new Intent(this, GioHangActivity.class));
+        });
+
+        ivFavourite.setOnClickListener(v -> {
+            Toast.makeText(this, "Thêm vào mục yêu thích", Toast.LENGTH_SHORT).show();
+            // TODO: Xử lý thêm vào mục yêu thích
+        });
+
+        minusCart.setOnClickListener(v -> {
+            int currentQuantity = Integer.parseInt(numberItemTxt.getText().toString());
+            if (currentQuantity > 1) {
+                currentQuantity--;
+                numberItemTxt.setText(String.valueOf(currentQuantity));
+            }
+        });
+
+        plusCart.setOnClickListener(v -> {
+            int currentQuantity = Integer.parseInt(numberItemTxt.getText().toString());
+            currentQuantity++;
+            numberItemTxt.setText(String.valueOf(currentQuantity));
+        });
+
         btnthem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,18 +87,20 @@ public class ChiTietActivity extends AppCompatActivity {
     }
 
     private void themGioHang() {
-        if(Utils.mangGioHang.size() > 0){
+        int soluong = Integer.parseInt(numberItemTxt.getText().toString());
+
+        if (Utils.mangGioHang.size() > 0) {
             boolean flag = false;
-            int soluong = Integer.parseInt(spinner.getSelectedItem().toString());
             for (int i = 0; i < Utils.mangGioHang.size(); i++) {
                 if (Utils.mangGioHang.get(i).getIdsp() == (sanPhamMoi.getId())) {
                     Utils.mangGioHang.get(i).setSoluong(soluong + Utils.mangGioHang.get(i).getSoluong());
                     long gia = Long.parseLong(sanPhamMoi.getGiasp()) * Utils.mangGioHang.get(i).getSoluong();
                     Utils.mangGioHang.get(i).setGiasp(gia);
                     flag = true;
+                    break;
                 }
             }
-            if (flag == false){
+            if (!flag) {
                 long gia = Long.parseLong(sanPhamMoi.getGiasp()) * soluong;
                 GioHang gioHang = new GioHang();
                 gioHang.setTensp(sanPhamMoi.getTensp());
@@ -80,9 +110,7 @@ public class ChiTietActivity extends AppCompatActivity {
                 gioHang.setSoluong(soluong);
                 Utils.mangGioHang.add(gioHang);
             }
-
-        }else {
-            int soluong = Integer.parseInt(spinner.getSelectedItem().toString());
+        } else {
             long gia = Integer.parseInt(sanPhamMoi.getGiasp()) * soluong;
             GioHang gioHang = new GioHang();
             gioHang.setTensp(sanPhamMoi.getTensp());
@@ -92,13 +120,14 @@ public class ChiTietActivity extends AppCompatActivity {
             gioHang.setSoluong(soluong);
             Utils.mangGioHang.add(gioHang);
         }
+
         int totalItem = 0;
-        for (int i = 0; i<Utils.mangGioHang.size(); i++)
-        {
-            totalItem = totalItem + Utils.mangGioHang.get(i).getSoluong();
+        for (int i = 0; i < Utils.mangGioHang.size(); i++) {
+            totalItem += Utils.mangGioHang.get(i).getSoluong();
         }
         badge.setText(String.valueOf(totalItem));
     }
+
 
     private void initData() {
         sanPhamMoi = (SanPhamMoi) getIntent().getSerializableExtra("chitiet");
@@ -108,8 +137,6 @@ public class ChiTietActivity extends AppCompatActivity {
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         giasp.setText("Giá: "+decimalFormat.format(Double.parseDouble(sanPhamMoi.getGiasp()))+"đ");
         Integer[] so = new Integer[]{1,2,3,4,5,6,7,8,9,10};
-        ArrayAdapter<Integer> adapterspin = new ArrayAdapter<>(this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item, so);
-        spinner.setAdapter(adapterspin);
 
     }
 
@@ -118,10 +145,15 @@ public class ChiTietActivity extends AppCompatActivity {
         giasp = findViewById(R.id.txtgiasp);
         mota = findViewById(R.id.txtmotachitiet);
         btnthem = findViewById(R.id.btnthemvaogio);
-        spinner = findViewById(R.id.spinner);
         imghinhanh = findViewById(R.id.imgchitiet);
         toolbar = findViewById(R.id.toolbar);
         badge = findViewById(R.id.menu_sl);
+        ivBack = findViewById(R.id.ivBack);
+        ivFavourite = findViewById(R.id.ivFavourite);
+        ivCart = findViewById(R.id.ivCart);
+        numberItemTxt = findViewById(R.id.numberItemTxt);
+        minusCart = findViewById(R.id.minusCart);
+        plusCart = findViewById(R.id.plusCart);
         FrameLayout frameLayoutgiohang = findViewById(R.id.framegiohang);
         frameLayoutgiohang.setOnClickListener(new View.OnClickListener() {
             @Override

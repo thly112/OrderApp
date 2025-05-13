@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Observable;
 
 import com.example.oderapp.model.DonHangModel;
 import com.example.oderapp.model.LoaiSPModel;
+import com.example.oderapp.model.MessageModel;
 import com.example.oderapp.model.SanPhamMoi;
 import com.example.oderapp.model.SanPhamMoiModel;
 import com.example.oderapp.model.User;
@@ -33,7 +34,8 @@ public interface ApiBanHang {
     Observable<UserModel> dangKi(
             @Field("email") String email,
             @Field("pass") String pass,
-            @Field("username") String username
+            @Field("username") String username,
+            @Field("uid") String uid
 
     );
 
@@ -52,7 +54,7 @@ public interface ApiBanHang {
 
     @POST("donhang.php")
     @FormUrlEncoded
-    Observable<UserModel> createOrder(
+    Observable<MessageModel> createOrder(
             @Field("email") String email,
             @Field("sdt") String sdt,
             @Field("tongtien") String tongtien,
@@ -73,5 +75,12 @@ public interface ApiBanHang {
     @FormUrlEncoded
     Observable<SanPhamMoiModel> search(
             @Field("search") String search
+    );
+
+    @POST("updatezalopay.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updateZalo(
+            @Field("id") int id,
+            @Field("token") String token
     );
 }

@@ -124,39 +124,39 @@ public class MainActivity extends AppCompatActivity {
 
     private void getSpMoi() {
         compositeDisposable.add(apiBanHang.getSpMoi()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                    sanPhamMoiModel -> {
-                        if(sanPhamMoiModel.isSuccess()){
-                            mangSpMoi = sanPhamMoiModel.getResult();
-                            spAdapter = new SanPhamMoiAdapter(getApplicationContext(), mangSpMoi);
-                            recyclerViewManHinhChinh.setAdapter(spAdapter);
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        sanPhamMoiModel -> {
+                            if(sanPhamMoiModel.isSuccess()){
+                                mangSpMoi = sanPhamMoiModel.getResult();
+                                spAdapter = new SanPhamMoiAdapter(getApplicationContext(), mangSpMoi);
+                                recyclerViewManHinhChinh.setAdapter(spAdapter);
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server spm" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                            Log.e("ERROR_SPM", throwable.getMessage());
                         }
-                    },
-                    throwable -> {
-                        Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server spm" + throwable.getMessage(), Toast.LENGTH_LONG).show();
-                        Log.e("ERROR_SPM", throwable.getMessage());
-                    }
-            ));
+                ));
     }
 
     private void getLoaiSanPham() {
         compositeDisposable.add(apiBanHang.getLoaiSP()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-                loaiSPModel -> {
-                    if (loaiSPModel.isSuccess()) {
-                        mangloaisp = loaiSPModel.getResult();
-                        loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
-                        listViewManHinhChinh.setAdapter(loaiSPAdapter);
-                    }
-                },
-                throwable -> {
-                    Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server lsp" + throwable.getMessage(), Toast.LENGTH_LONG).show();
-                }
-        ));
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        loaiSPModel -> {
+                            if (loaiSPModel.isSuccess()) {
+                                mangloaisp = loaiSPModel.getResult();
+                                loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
+                                listViewManHinhChinh.setAdapter(loaiSPAdapter);
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server lsp" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                ));
 
     }
     private void ActionViewFlipper() {
