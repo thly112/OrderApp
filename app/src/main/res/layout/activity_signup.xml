@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/beige"
     tools:context=".activity.SignupActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -135,7 +136,7 @@
             android:layout_width="185dp"
             android:layout_height="50dp"
             android:layout_marginTop="60dp"
-            android:background="@drawable/orange_bg"
+            android:background="@drawable/addtocartshape"
             android:text="Create Account"
             android:textColor="@color/white"
             android:textSize="16sp"
