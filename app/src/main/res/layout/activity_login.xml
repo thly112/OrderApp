@@ -124,7 +124,7 @@
             android:id="@+id/button"
             android:layout_width="152dp"
             android:layout_height="55dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/whitebutton"
             android:drawableLeft="@drawable/google"
             android:paddingLeft="15dp"
@@ -138,7 +138,7 @@
             android:id="@+id/button2"
             android:layout_width="152dp"
             android:layout_height="55dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/whitebutton"
             android:drawableLeft="@drawable/facebook"
             android:paddingLeft="15dp"
@@ -150,36 +150,37 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnLogin"
-            android:layout_width="152dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="12dp"
+            android:layout_width="330dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="116dp"
             android:background="@drawable/orange_bg"
             android:drawableLeft="@drawable/isuser"
             android:paddingLeft="15dp"
-            android:textColor="@color/white"
             android:text="LOGIN"
-            android:textSize="20sp"
             android:textAllCaps="false"
-            app:layout_constraintEnd_toStartOf="@+id/btnGuests"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnGuests"
-            android:layout_width="152dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="12dp"
+            android:layout_width="335dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/whitebutton"
             android:drawableLeft="@drawable/notuser"
             android:paddingLeft="15dp"
-            android:textColor="@color/orange"
             android:text="GUESTS"
-            android:textSize="20sp"
             android:textAllCaps="false"
+            android:textColor="@color/orange"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnLogin"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
+            app:layout_constraintHorizontal_bias="0.539"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
         <TextView
             android:id="@+id/btnDontHave"

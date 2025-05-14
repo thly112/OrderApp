@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                     Paper.book().write("email", str_email);
                     Paper.book().write("pass", str_pass);
                     if (user != null) {
-                        //user da dang nhap fireabse
+                        //user da dang nhap firebase
                         dangNhap(str_email, str_pass);
                     } else {
                         //user da signout
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            dangNhap(Paper.book().read("email"), Paper.book().read("pass"));
+//                            dangNhap(Paper.book().read("email"), Paper.book().read("pass"));
                         }
                     }, 1);
                 }

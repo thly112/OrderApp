@@ -39,6 +39,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    packagingOptions {
+        exclude("META-INF/DEPENDENCIES")
+    }
 }
 
 dependencies {
@@ -108,4 +111,8 @@ dependencies {
     implementation("androidx.credentials:credentials:1.3.0")
     implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
     implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation("com.google.firebase:firebase-messaging:24.1.1")
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.19.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
 }

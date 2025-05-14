@@ -56,7 +56,7 @@ public interface ApiBanHang {
     @FormUrlEncoded
     Observable<MessageModel> createOrder(
             @Field("email") String email,
-            @Field("sdt") String sdt,
+            @Field("sodienthoai") String sdt,
             @Field("tongtien") String tongtien,
             @Field("iduser") int id,
             @Field("diachi") String diachi,
@@ -76,11 +76,24 @@ public interface ApiBanHang {
     Observable<SanPhamMoiModel> search(
             @Field("search") String search
     );
+    @POST("gettoken.php")
+    @FormUrlEncoded
+    Observable<UserModel> gettoken(
+            @Field("status") int status
+    );
 
+    @POST("updatetoken.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updateToken(
+            @Field("id") int id,
+            @Field("token") String token
+    );
     @POST("updatezalopay.php")
     @FormUrlEncoded
     Observable<MessageModel> updateZalo(
             @Field("id") int id,
             @Field("token") String token
     );
+
+
 }
