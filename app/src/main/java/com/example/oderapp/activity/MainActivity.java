@@ -136,11 +136,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getToken() {
+        if (Utils.user_current == null ) {
+            return; // Bỏ qua nếu là khách
+        }
         FirebaseMessaging.getInstance().getToken()
                 .addOnSuccessListener(new OnSuccessListener<String>() {
                     @Override
                     public void onSuccess(String s) {
-                        if(!TextUtils.isEmpty(s)) {
+                        if (!TextUtils.isEmpty(s)){
                             compositeDisposable.add(apiBanHang.updateToken(Utils.user_current.getId(), s)
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())

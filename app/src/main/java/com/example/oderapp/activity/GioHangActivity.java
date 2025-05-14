@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,11 +34,12 @@ import java.util.List;
 
 public class GioHangActivity extends AppCompatActivity {
     TextView giohangtrong, tongtien;
-    Toolbar toolbar;
+//    Toolbar toolbar;
     RecyclerView recyclerView;
     Button btnmuahang;
     GioHangAdapter adapter;
     long tongtiensp;
+    ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +60,15 @@ public class GioHangActivity extends AppCompatActivity {
     }
 
     private void initControl() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//            }
+//        });
+        ivBack.setOnClickListener(v -> finish());
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -95,9 +98,10 @@ public class GioHangActivity extends AppCompatActivity {
     private void initView() {
         tongtien = findViewById(R.id.txttongtien);
         giohangtrong = findViewById(R.id.txtgiohangtrong);
-        toolbar = findViewById(R.id.toolbar);
+//        toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.recycleviewgiohang);
         btnmuahang = findViewById(R.id.btnmuahang);
+        ivBack = findViewById(R.id.ivBack);
     }
     @Override
     protected void onStart(){
