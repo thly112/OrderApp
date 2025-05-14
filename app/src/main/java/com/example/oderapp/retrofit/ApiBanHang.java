@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Observable;
 
 import com.example.oderapp.model.DonHangModel;
 import com.example.oderapp.model.LoaiSPModel;
+import com.example.oderapp.model.MessageModel;
 import com.example.oderapp.model.SanPhamMoi;
 import com.example.oderapp.model.SanPhamMoiModel;
 import com.example.oderapp.model.User;
@@ -34,7 +35,8 @@ public interface ApiBanHang {
             @Field("email") String email,
             @Field("pass") String pass,
             @Field("username") String username,
-            @Field("mobile") String sdt
+            @Field("mobile") String sdt,
+            @Field("uid") String uid
     );
 
     @POST("dangnhap.php")
@@ -52,9 +54,9 @@ public interface ApiBanHang {
 
     @POST("donhang.php")
     @FormUrlEncoded
-    Observable<UserModel> createOrder(
+    Observable<MessageModel> createOrder(
             @Field("email") String email,
-            @Field("sdt") String sdt,
+            @Field("sodienthoai") String sdt,
             @Field("tongtien") String tongtien,
             @Field("iduser") int id,
             @Field("diachi") String diachi,
@@ -74,4 +76,24 @@ public interface ApiBanHang {
     Observable<SanPhamMoiModel> search(
             @Field("search") String search
     );
+    @POST("gettoken.php")
+    @FormUrlEncoded
+    Observable<UserModel> gettoken(
+            @Field("status") int status
+    );
+
+    @POST("updatetoken.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updateToken(
+            @Field("id") int id,
+            @Field("token") String token
+    );
+    @POST("updatezalopay.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updateZalo(
+            @Field("id") int id,
+            @Field("token") String token
+    );
+
+
 }

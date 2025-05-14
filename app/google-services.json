@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "106389240182",
+    "project_id": "oderapp-f3e3f",
+    "storage_bucket": "oderapp-f3e3f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106389240182:android:1977497c652b7fc4afa257",
+        "android_client_info": {
+          "package_name": "com.example.oderapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlldlYBLmJJcy1tE29MNdJRH0A1ZMPsbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

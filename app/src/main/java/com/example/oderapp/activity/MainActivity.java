@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -33,18 +34,27 @@ import com.example.oderapp.model.SanPhamMoi;
 import com.example.oderapp.model.User;
 import com.example.oderapp.retrofit.ApiBanHang;
 import com.example.oderapp.retrofit.RetrofitClient;
+import com.example.oderapp.utils.AccessToken;
 import com.example.oderapp.utils.Utils;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.internal.Util;
+import vn.zalopay.sdk.ZaloPayError;
+import vn.zalopay.sdk.ZaloPaySDK;
+import vn.zalopay.sdk.listeners.PayOrderListener;
 
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -69,10 +79,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
         Paper.init(this);
+        initAccessToken();
+
         if (Paper.book().read("user") != null){
             User user = Paper.book().read("user");
             Utils.user_current = user;
         }
+        getToken();
         Anhxa();
         ActionBar();
         ActionViewFlipper();
@@ -84,7 +97,65 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Toast.makeText(getApplicationContext(), "khong co internet", Toast.LENGTH_LONG).show();
         }
+
+        // Kiểm tra nếu có dữ liệu truyền vào từ ThanhToanActivity
+        String paymentStatus = getIntent().getStringExtra("payment_status");
+        if (paymentStatus != null) {
+            switch (paymentStatus) {
+                case "success":
+                    Toast.makeText(this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+                    break;
+                case "cancel":
+                    Toast.makeText(this, "Đã hủy thanh toán", Toast.LENGTH_SHORT).show();
+                    break;
+                case "error":
+                    Toast.makeText(this, "Lỗi thanh toán", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
     }
+
+    private void initAccessToken() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                AccessToken accessToken = new AccessToken();
+                String token = accessToken.getAccessToken();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("token 1", token);
+                        Utils.tokenSend = token;
+                    }
+                });
+            }
+        });
+
+
+    }
+
+    private void getToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnSuccessListener(new OnSuccessListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        if(!TextUtils.isEmpty(s)) {
+                            compositeDisposable.add(apiBanHang.updateToken(Utils.user_current.getId(), s)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(
+                                            messageModel -> {
+
+                                            }, throwable -> {
+                                                Log.d("log", throwable.getMessage());
+                                            }
+                                    ));
+                        }
+                    }
+                });
+    }
+
 
     private void getEventClick() {
         listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -113,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                     case 6:
                         // xoa key user
                         Paper.book().delete("user");
+                        FirebaseAuth.getInstance().signOut();
                         Intent dangnhap = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(dangnhap);
                         finish();
@@ -124,39 +196,39 @@ public class MainActivity extends AppCompatActivity {
 
     private void getSpMoi() {
         compositeDisposable.add(apiBanHang.getSpMoi()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                    sanPhamMoiModel -> {
-                        if(sanPhamMoiModel.isSuccess()){
-                            mangSpMoi = sanPhamMoiModel.getResult();
-                            spAdapter = new SanPhamMoiAdapter(getApplicationContext(), mangSpMoi);
-                            recyclerViewManHinhChinh.setAdapter(spAdapter);
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        sanPhamMoiModel -> {
+                            if(sanPhamMoiModel.isSuccess()){
+                                mangSpMoi = sanPhamMoiModel.getResult();
+                                spAdapter = new SanPhamMoiAdapter(getApplicationContext(), mangSpMoi);
+                                recyclerViewManHinhChinh.setAdapter(spAdapter);
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server spm" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                            Log.e("ERROR_SPM", throwable.getMessage());
                         }
-                    },
-                    throwable -> {
-                        Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server spm" + throwable.getMessage(), Toast.LENGTH_LONG).show();
-                        Log.e("ERROR_SPM", throwable.getMessage());
-                    }
-            ));
+                ));
     }
 
     private void getLoaiSanPham() {
         compositeDisposable.add(apiBanHang.getLoaiSP()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-                loaiSPModel -> {
-                    if (loaiSPModel.isSuccess()) {
-                        mangloaisp = loaiSPModel.getResult();
-                        loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
-                        listViewManHinhChinh.setAdapter(loaiSPAdapter);
-                    }
-                },
-                throwable -> {
-                    Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server lsp" + throwable.getMessage(), Toast.LENGTH_LONG).show();
-                }
-        ));
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        loaiSPModel -> {
+                            if (loaiSPModel.isSuccess()) {
+                                mangloaisp = loaiSPModel.getResult();
+                                loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
+                                listViewManHinhChinh.setAdapter(loaiSPAdapter);
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server lsp" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                ));
 
     }
     private void ActionViewFlipper() {
