@@ -95,24 +95,24 @@ dependencies {
     implementation (libs.paperdb)
     implementation (libs.gson)
     //zalopay
-    implementation("com.squareup.okhttp3:okhttp:4.6.0")
-    implementation("commons-codec:commons-codec:1.14")
+    implementation(libs.okhttp)
+    implementation(libs.commons.codec)
     //momo
 //    implementation ("com.github.momo-wallet:mobile-sdk:1.0.7")
     //firebase
     // Import the BoM for the Firebase platform
-    implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+    implementation(libs.firebase.bom)
 
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation("com.google.firebase:firebase-auth")
+    implementation(libs.firebase.auth)
 
     // Also add the dependencies for the Credential Manager libraries and specify their versions
-    implementation("androidx.credentials:credentials:1.3.0")
-    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
-    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
-    implementation("com.google.firebase:firebase-messaging:24.1.1")
-    implementation("com.google.auth:google-auth-library-oauth2-http:1.19.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation(libs.credentials)
+    implementation(libs.credentials.play.services.auth)
+    implementation(libs.googleid)
+    implementation(libs.firebase.messaging)
+    implementation(libs.google.auth.library.oauth2.http)
+    implementation(libs.logging.interceptor)
 
 }
