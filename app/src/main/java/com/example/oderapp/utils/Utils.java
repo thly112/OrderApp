@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
-    public static final String BASE_URL = "http://192.168.1.23/banhang/";
+    public static final String BASE_URL = "http://192.168.1.13/banhang/";
     public static List<GioHang> mangGioHang = new ArrayList<>();
     public static List<GioHang> mangMuaHang = new ArrayList<>();
 
