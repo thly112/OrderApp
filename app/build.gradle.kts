@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -38,6 +39,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    packagingOptions {
+        exclude("META-INF/DEPENDENCIES")
+    }
 }
 
 dependencies {
@@ -54,6 +58,14 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation(libs.constraintlayout.core)
+
+    implementation(fileTree(mapOf(
+        "dir" to "D:\\ThLy\\Junior\\LapTrinhDiDong",
+        "include" to listOf("*.aar", "*.jar"),
+        "exclude" to emptyList<String>()
+    )) as FileTree)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -64,17 +76,44 @@ dependencies {
     implementation (libs.rxjava)
     // Retrofit
     implementation (libs.retrofit)
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation (libs.converter.gson)
     implementation (libs.rxjava3.retrofit.adapter)
     // Navigation Component
-    implementation ("androidx.navigation:navigation-fragment:2.7.7")
-    implementation ("androidx.navigation:navigation-ui:2.7.7")
-
+    implementation (libs.navigation.fragment.v277)
+    implementation (libs.navigation.ui.v277)
+    //brade
+    implementation (libs.notification.badge)
     // Material
-    implementation ("com.google.android.material:material:1.11.0")
-    implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
+    implementation (libs.material.v1110)
+    implementation (libs.imageslideshow)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+    // even bus
+    implementation(libs.eventbus)
+    //paper
+    implementation (libs.paperdb)
+    implementation (libs.gson)
+    //zalopay
+    implementation("com.squareup.okhttp3:okhttp:4.6.0")
+    implementation("commons-codec:commons-codec:1.14")
+    //momo
+//    implementation ("com.github.momo-wallet:mobile-sdk:1.0.7")
+    //firebase
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-auth")
+
+    // Also add the dependencies for the Credential Manager libraries and specify their versions
+    implementation("androidx.credentials:credentials:1.3.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation("com.google.firebase:firebase-messaging:24.1.1")
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.19.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
 }

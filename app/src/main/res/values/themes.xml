@@ -3,7 +3,19 @@
     <style name="Base.Theme.OderApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Đặt màu cho status bar -->
+        <item name="colorSurface">@color/beige</item>
+        <item name="android:statusBarColor">@color/beige</item>
+        <item name="android:navigationBarColor">@color/beige</item> <!-- Tùy chọn -->
+        <!-- Các item khác -->
     </style>
-
+    <style name="CircleImageview2">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+    <style name="CircleImageview">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15dp</item>
+    </style>
     <style name="Theme.OderApp" parent="Base.Theme.OderApp" />
 </resources>
