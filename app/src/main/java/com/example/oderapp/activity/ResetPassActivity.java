@@ -62,11 +62,11 @@ public class ResetPassActivity extends AppCompatActivity {
                                         }else {
                                             Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
-                                        progressBar.setVisibility(View.VISIBLE);
+                                        progressBar.setVisibility(View.GONE);
                                     },
                                     throwable -> {
                                         Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                        progressBar.setVisibility(View.VISIBLE);
+                                        progressBar.setVisibility(View.GONE);
                                     }
                             ));
                 }

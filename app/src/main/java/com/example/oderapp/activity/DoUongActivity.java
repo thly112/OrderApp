@@ -140,16 +140,6 @@ public class DoUongActivity extends AppCompatActivity {
         );
     }
 
-//    private void ActionToolBar() {
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                finish();
-//            }
-//        });
-//    }
 
     private void AnhXa() {
 //        toolbar = findViewById(R.id.toolbardu);
