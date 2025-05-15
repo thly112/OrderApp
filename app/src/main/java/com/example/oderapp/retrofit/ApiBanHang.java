@@ -36,8 +36,7 @@ public interface ApiBanHang {
             @Field("email") String email,
             @Field("pass") String pass,
             @Field("username") String username,
-            @Field("mobile") String sdt,
-            @Field("uid") String uid
+            @Field("mobile") String sdt
     );
 
     @POST("dangnhap.php")
@@ -76,19 +75,6 @@ public interface ApiBanHang {
     @FormUrlEncoded
     Observable<SanPhamMoiModel> search(
             @Field("search") String search
-    );
-
-    @POST("gettoken.php")
-    @FormUrlEncoded
-    Observable<UserModel> gettoken(
-            @Field("status") int status
-    );
-
-    @POST("updatetoken.php")
-    @FormUrlEncoded
-    Observable<MessageModel> updateToken(
-            @Field("id") int id,
-            @Field("token") String token
     );
 
     @POST("updatezalopay.php")
