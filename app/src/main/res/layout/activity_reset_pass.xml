@@ -20,35 +20,6 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/back" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Continue with"
-        android:textColor="@color/darkBrown"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnresetpass" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogin"
-        android:layout_width="325dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/whitebutton"
-        android:paddingLeft="15dp"
-        android:text="Login"
-        android:textAllCaps="false"
-        android:textColor="@color/darkBrown"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="150dp"
@@ -56,10 +27,10 @@
         android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.033"
+        app:layout_constraintVertical_bias="0.029"
         app:srcCompat="@drawable/logo" />
 
     <TextView
@@ -90,7 +61,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="52dp"
         android:text="Reset Password"
         android:textColor="@color/darkBrown"
         android:textSize="25dp"
@@ -104,7 +75,7 @@
         android:id="@+id/btnresetpass"
         android:layout_width="325dp"
         android:layout_height="48dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/addtocartshape"
         android:text="Reset Password"
         android:textAllCaps="false"
@@ -119,7 +90,7 @@
         android:id="@+id/edtresetpass"
         android:layout_width="325dp"
         android:layout_height="55dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
         android:background="@drawable/edittextshape"
         android:drawableLeft="@drawable/mail"
         android:drawablePadding="15dp"

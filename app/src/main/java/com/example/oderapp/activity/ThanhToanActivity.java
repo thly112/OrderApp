@@ -11,9 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -21,18 +18,9 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.example.oderapp.R;
 import com.example.oderapp.model.CreateOrder;
 import com.example.oderapp.model.GioHang;
-import com.example.oderapp.model.Message;
-import com.example.oderapp.model.MessageData;
-import com.example.oderapp.model.Notification;
 import com.example.oderapp.retrofit.ApiBanHang;
-import com.example.oderapp.retrofit.ApiPushNotification;
-import com.example.oderapp.retrofit.AuthorizationInterceptor;
 import com.example.oderapp.retrofit.RetrofitClient;
-import com.example.oderapp.retrofit.RetrofitClientNoti;
 import com.example.oderapp.utils.Utils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;

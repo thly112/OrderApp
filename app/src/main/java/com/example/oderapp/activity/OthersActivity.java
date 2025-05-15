@@ -72,8 +72,12 @@ public class OthersActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Đăng xuất
+                if (Utils.mangGioHang != null) {
+                    Utils.mangGioHang.clear();
+                }
+                Paper.book().delete("giohang");
+
                 Paper.book().delete("user");
-                FirebaseAuth.getInstance().signOut();
                 Intent dangnhap = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(dangnhap);
                 finish();
