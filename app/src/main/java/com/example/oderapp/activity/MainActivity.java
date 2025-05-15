@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
             User user = Paper.book().read("user");
             Utils.user_current = user;
         }
-        getToken();
         Anhxa();
         ActionViewFlipper();
         if(isConnected(this)){
@@ -142,29 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void getToken() {
-        if (Utils.user_current == null ) {
-            return; // Bỏ qua nếu là khách
-        }
-        FirebaseMessaging.getInstance().getToken()
-                .addOnSuccessListener(new OnSuccessListener<String>() {
-                    @Override
-                    public void onSuccess(String s) {
-                        if (!TextUtils.isEmpty(s)){
-                            compositeDisposable.add(apiBanHang.updateToken(Utils.user_current.getId(), s)
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(
-                                            messageModel -> {
-
-                                            }, throwable -> {
-                                                Log.d("log", throwable.getMessage());
-                                            }
-                                    ));
-                        }
-                    }
-                });
-    }
 
 
     private void getEventClick() {
@@ -291,8 +267,12 @@ public class MainActivity extends AppCompatActivity {
         frameLayout = findViewById(R.id.framegiohang);
         // khoi tao list
         mangloaisp = new ArrayList<>();
-
         mangSpMoi = new ArrayList<>();
+
+        if(Paper.book().read("giohang") != null) {
+            Utils.mangGioHang = Paper.book().read("giohang");
+        }
+
         if (Utils.mangGioHang == null) {
             Utils.mangGioHang = new ArrayList<>();
         }else {

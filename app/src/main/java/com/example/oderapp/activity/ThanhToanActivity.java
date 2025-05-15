@@ -20,6 +20,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.oderapp.R;
 import com.example.oderapp.model.CreateOrder;
+import com.example.oderapp.model.GioHang;
 import com.example.oderapp.model.Message;
 import com.example.oderapp.model.MessageData;
 import com.example.oderapp.model.Notification;
@@ -38,6 +39,7 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 
+import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -105,9 +107,17 @@ public class ThanhToanActivity extends AppCompatActivity {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     messageModel -> {
-                                        pushNotiToUser();
                                         Toast.makeText(getApplicationContext(), "Thanh cong", Toast.LENGTH_SHORT).show();
+                                        //remove san pham khoi gio hang
+                                        for(int i=0; i<Utils.mangMuaHang.size(); i++)
+                                        {
+                                            GioHang giohang = Utils.mangMuaHang.get(i);
+                                            if(Utils.mangGioHang.contains(giohang)){
+                                                Utils.mangGioHang.remove(giohang);
+                                            }
+                                        }
                                         Utils.mangMuaHang.clear();
+                                        Paper.book().write("giohang", Utils.mangGioHang);
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -178,7 +188,6 @@ public class ThanhToanActivity extends AppCompatActivity {
                                         messageModel -> {
                                             Log.d("ZaloPay", "Update đơn hàng thành công: " + messageModel.isSuccess());
                                             if (messageModel.isSuccess()) {
-                                                pushNotiToUser();
                                                 Utils.mangMuaHang.clear(); // Xóa giỏ hàng
                                                 Toast.makeText(getApplicationContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -226,45 +235,6 @@ public class ThanhToanActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void pushNotiToUser() {
-        if(Utils.tokenSend != null){
-            client = new OkHttpClient.Builder()
-                    .addInterceptor(new AuthorizationInterceptor(Utils.tokenSend))
-                    .build();
-        }
-
-        //getTokken
-        compositeDisposable.add(apiBanHang.gettoken(0)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        userModel -> {
-                            if (userModel.isSuccess()) {
-                                for (int i = 0; i < userModel.getResult().size(); i++) {
-                                    Notification notification = new Notification("Thông báo!", "Bạn đã đặt hàng thành công :)");
-                                    Message message = new Message(userModel.getResult().get(i).getToken(), notification);
-
-                                    Log.d("FCM_TOKEN2", userModel.getResult().get(i).getToken());
-                                    MessageData messageData = new MessageData(message);
-                                    ApiPushNotification apiPushNotification = RetrofitClientNoti.getInstance(client).create(ApiPushNotification.class);
-                                    compositeDisposable.add(apiPushNotification.sendNotification(messageData)
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(
-                                                    user -> {
-                                                        Log.d("FCM_RESPONSE", new Gson().toJson(user));
-                                                    },
-                                                    throwable -> {
-                                                        Log.e("FCM_ERROR", Log.getStackTraceString(throwable));
-
-                                                    }
-                                            ));
-                                }
-                            }
-                        }
-                ));
     }
 
     private void initView() {

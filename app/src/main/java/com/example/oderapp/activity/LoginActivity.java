@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     EditText email, pass;
     ApiBanHang apiBanHang;
-    FirebaseAuth firebaseAuth;
     FirebaseUser user;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     boolean isLogin = false;
@@ -59,22 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                     //Save
                     Paper.book().write("email", str_email);
                     Paper.book().write("pass", str_pass);
-                    if (user != null) {
-                        //user da dang nhap firebase
-                        dangNhap(str_email, str_pass);
-                    } else {
-                        //user da signout
-                        firebaseAuth.signInWithEmailAndPassword(str_email, str_pass)
-                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if(task.isSuccessful()) {
-                                            dangNhap(str_email, str_pass);
-                                        }
-                                    }
-                                });
-
-                    }
+                    dangNhap(str_email, str_pass);
                 }
 
             }
@@ -112,8 +96,6 @@ public class LoginActivity extends AppCompatActivity {
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
         email = findViewById(R.id.txtemail);
         pass = findViewById(R.id.txtpass);
-        firebaseAuth = FirebaseAuth.getInstance();
-        user = firebaseAuth.getCurrentUser();
 
         //read data
         if(Paper.book().read("email") != null && Paper.book().read("pass") != null){

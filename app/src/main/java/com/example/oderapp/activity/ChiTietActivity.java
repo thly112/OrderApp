@@ -26,6 +26,8 @@ import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.text.DecimalFormat;
 
+import io.paperdb.Paper;
+
 public class ChiTietActivity extends AppCompatActivity {
     TextView tensp, giasp, mota, numberItemTxt, minusCart, plusCart;
     Button btnthem;
@@ -52,7 +54,6 @@ public class ChiTietActivity extends AppCompatActivity {
 
         ivCart.setOnClickListener(v -> {
             Toast.makeText(this, "Mở giỏ hàng", Toast.LENGTH_SHORT).show();
-            // Chuyển sang Activity giỏ hàng nếu có
              startActivity(new Intent(this, GioHangActivity.class));
         });
 
@@ -75,48 +76,47 @@ public class ChiTietActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 themGioHang();
+                Paper.book().write("giohang", Utils.mangGioHang);
             }
         });
     }
-
     private void themGioHang() {
-        //Guests
         if (Utils.user_current == null) {
             Intent intent = new Intent(ChiTietActivity.this, LoginActivity.class);
             Toast.makeText(this, "Vui lòng đăng nhập để thêm sản phẩm vào giỏ", Toast.LENGTH_SHORT).show();
             startActivity(intent);
             return;
         }
+
         int soluong = Integer.parseInt(numberItemTxt.getText().toString());
+        long dongia = Long.parseLong(sanPhamMoi.getGiasp()); // đơn giá 1 sản phẩm
 
         if (Utils.mangGioHang.size() > 0) {
             boolean flag = false;
             for (int i = 0; i < Utils.mangGioHang.size(); i++) {
-                if (Utils.mangGioHang.get(i).getIdsp() == (sanPhamMoi.getId())) {
-                    Utils.mangGioHang.get(i).setSoluong(soluong + Utils.mangGioHang.get(i).getSoluong());
-                    long gia = Long.parseLong(sanPhamMoi.getGiasp()) * Utils.mangGioHang.get(i).getSoluong();
-                    Utils.mangGioHang.get(i).setGiasp(gia);
+                if (Utils.mangGioHang.get(i).getIdsp() == sanPhamMoi.getId()) {
+                    // Tăng số lượng, không thay đổi giá
+                    Utils.mangGioHang.get(i).setSoluong(Utils.mangGioHang.get(i).getSoluong() + soluong);
+                    // giữ nguyên giá đơn
                     flag = true;
                     break;
                 }
             }
             if (!flag) {
-                long gia = Long.parseLong(sanPhamMoi.getGiasp()) * soluong;
                 GioHang gioHang = new GioHang();
                 gioHang.setTensp(sanPhamMoi.getTensp());
                 gioHang.setIdsp(sanPhamMoi.getId());
                 gioHang.setHinhsp(sanPhamMoi.getHinhanh());
-                gioHang.setGiasp(gia);
+                gioHang.setGiasp(dongia); // lưu đơn giá 1 sản phẩm
                 gioHang.setSoluong(soluong);
                 Utils.mangGioHang.add(gioHang);
             }
         } else {
-            long gia = Integer.parseInt(sanPhamMoi.getGiasp()) * soluong;
             GioHang gioHang = new GioHang();
             gioHang.setTensp(sanPhamMoi.getTensp());
             gioHang.setIdsp(sanPhamMoi.getId());
             gioHang.setHinhsp(sanPhamMoi.getHinhanh());
-            gioHang.setGiasp(gia);
+            gioHang.setGiasp(dongia);
             gioHang.setSoluong(soluong);
             Utils.mangGioHang.add(gioHang);
         }
