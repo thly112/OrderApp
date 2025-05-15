@@ -71,7 +71,13 @@ public class SignupActivity extends AppCompatActivity {
         String strsdt = this.sdt.getText().toString().trim();
         if (stremail.isEmpty() || strpass.isEmpty() || strusername.isEmpty() || strsdt.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+
+        if (strpass.length() < 6) {
+            Toast.makeText(this, "Mật khẩu phải có ít nhất 6 ký tự", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
             firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.createUserWithEmailAndPassword(stremail, strpass)
                     .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {

@@ -3,6 +3,7 @@ package com.example.oderapp.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -30,8 +31,8 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DoUongActivity extends AppCompatActivity {
-    Toolbar toolbar;
     RecyclerView recyclerView;
+    ImageView ivBack;
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     int page = 1;
@@ -49,7 +50,8 @@ public class DoUongActivity extends AppCompatActivity {
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
         loai = getIntent().getIntExtra("loai", 1);
         AnhXa();
-        ActionToolBar();
+//        ActionToolBar();
+        ivBack.setOnClickListener(v -> finish());
         getData(page);
         addEventLoad();
     }
@@ -136,19 +138,20 @@ public class DoUongActivity extends AppCompatActivity {
         );
     }
 
-    private void ActionToolBar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-    }
+//    private void ActionToolBar() {
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//            }
+//        });
+//    }
 
     private void AnhXa() {
-        toolbar = findViewById(R.id.toolbardu);
+//        toolbar = findViewById(R.id.toolbardu);
+        ivBack = findViewById(R.id.ivBack);
         recyclerView = findViewById(R.id.recycleview_du);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);

@@ -2,6 +2,7 @@ package com.example.oderapp.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,14 +29,14 @@ public class LichSuActivity extends AppCompatActivity {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     ApiBanHang apiBanHang;
     RecyclerView relichsu;
-    Toolbar toolbar;
+    ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lich_su);
         initView();
-        initToolbar();
+        ivBack.setOnClickListener(v -> finish());
         getLichsu();
 
     }
@@ -55,21 +56,12 @@ public class LichSuActivity extends AppCompatActivity {
                 ));
     }
 
-    private void initToolbar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-    }
+
 
     private void initView() {
+        ivBack = findViewById(R.id.ivBack);
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
         relichsu = findViewById(R.id.recycleview_ls);
-        toolbar = findViewById(R.id.toolbarls);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         relichsu.setLayoutManager(layoutManager);
     }

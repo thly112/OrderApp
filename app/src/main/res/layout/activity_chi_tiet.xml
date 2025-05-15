@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:fitsSystemWindows="true"
     android:background="@drawable/light_gradient"
     tools:context=".activity.ChiTietActivity">
 
     <LinearLayout
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,6 +18,52 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="28dp"
+                    android:src="@drawable/back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.666" />
+
+
+                <FrameLayout
+                    android:id="@+id/framegiohang"
+                    android:layout_width="55dp"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.nex3z.notificationbadge.NotificationBadge
+                        android:id="@+id/menu_sl"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|right"
+                        tools:ignore="MissingClass" />
+
+                    <ImageView
+                        android:id="@+id/ivCart"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="15dp"
+                        android:src="@drawable/cart" />
+                </FrameLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgchitiet"
@@ -31,52 +77,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/CircleImageview2"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-            <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/back"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <FrameLayout
-                android:id="@+id/framegiohang"
-                android:layout_width="55dp"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_gravity="right"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toStartOf="@+id/ivFavourite"
-                app:layout_constraintHorizontal_bias="0.956"
-                app:layout_constraintStart_toEndOf="@+id/ivBack"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.nex3z.notificationbadge.NotificationBadge
-                    android:id="@+id/menu_sl"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="top|right"
-                    tools:ignore="MissingClass" />
-
-                <ImageView
-                    android:id="@+id/ivCart"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="15dp"
-                    android:src="@drawable/cart" />
-            </FrameLayout>
-
-            <ImageView
-                android:id="@+id/ivFavourite"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:layout_marginEnd="24dp"
-                android:src="@drawable/favorite_white"
-                app:layout_constraintBottom_toBottomOf="@+id/ivBack"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ivBack" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"

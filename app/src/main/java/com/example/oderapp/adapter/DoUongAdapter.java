@@ -52,8 +52,8 @@ public class DoUongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             myViewHolder.tensp.setText(sanPham.getTensp());
             DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
             myViewHolder.giasp.setText("Giá: "+decimalFormat.format(Double.parseDouble(sanPham.getGiasp()))+"đ");
-            myViewHolder.mota.setText(sanPham.getMota());
-            myViewHolder.idsp.setText(sanPham.getId() + "");
+//            myViewHolder.mota.setText(sanPham.getMota());
+//            myViewHolder.idsp.setText(sanPham.getId() + "");
             Glide.with(context).load(sanPham.getHinhanh()).into(myViewHolder.hinhanh);
             myViewHolder.setItemClickListener(new ItemClickListener() {
                 @Override
@@ -93,15 +93,15 @@ public class DoUongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tensp, giasp, mota, idsp;
+        TextView tensp, giasp, idsp;
         ImageView hinhanh;
         private ItemClickListener itemClickListener;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tensp = itemView.findViewById(R.id.itemdu_ten);
             giasp = itemView.findViewById(R.id.itemdu_gia);
-            mota = itemView.findViewById(R.id.itemdu_mota);
-            idsp = itemView.findViewById(R.id.itemdu_idsp);
+//            mota = itemView.findViewById(R.id.itemdu_mota);
+//            idsp = itemView.findViewById(R.id.itemdu_idsp);
             hinhanh = itemView.findViewById(R.id.itemdu_image);
             itemView.setOnClickListener(this);
         }

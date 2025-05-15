@@ -43,6 +43,14 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         initView();
+        // Lấy từ khóa từ intent
+        String keyword = getIntent().getStringExtra("keyword");
+        if (keyword != null && !keyword.isEmpty()) {
+            edtsearch.setText(keyword);           // Set vào ô tìm kiếm
+            edtsearch.setSelection(keyword.length()); // Đưa con trỏ xuống cuối chuỗi
+            getDataSearch(keyword);               // Tự động tìm kiếm
+        }
+
         ActionToolBar();
     }
 
@@ -73,6 +81,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void getDataSearch(String s) {
+        if (s.trim().isEmpty()) {
+            recyclerView.setAdapter(null); // Xóa kết quả
+            return;
+        }
         compositeDisposable.add(apiBanHang.search(s)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

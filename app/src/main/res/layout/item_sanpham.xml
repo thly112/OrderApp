@@ -5,7 +5,7 @@
     android:layout_marginTop="15dp"
     android:layout_marginBottom="8dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/item_imagesp"
         android:layout_marginLeft="10dp"
@@ -17,7 +17,7 @@
         android:textSize="15sp"
         android:layout_marginLeft="10dp"
         android:text="Đồ uống"
-        android:textColor="#57412b"
+        android:textColor="@color/darkBrown"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

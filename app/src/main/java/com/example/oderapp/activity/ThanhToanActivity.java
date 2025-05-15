@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +48,8 @@ import vn.zalopay.sdk.ZaloPaySDK;
 import vn.zalopay.sdk.listeners.PayOrderListener;
 
 public class ThanhToanActivity extends AppCompatActivity {
-    Toolbar toolbar;
     TextView txttongtien, txtemail;
+    ImageView ivBack;
     EditText edtdiachi, edtsdt;
     AppCompatButton btndathang, btnzalopay;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -67,7 +68,6 @@ public class ThanhToanActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         ZaloPaySDK.init(2553, Environment.SANDBOX);
-
         initView();
         countItem();
         initControl();
@@ -82,15 +82,7 @@ public class ThanhToanActivity extends AppCompatActivity {
     }
 
     private void initControl() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
+        ivBack.setOnClickListener(v -> finish());
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         tongtien = getIntent().getLongExtra("tongtien", 0);
         txttongtien.setText(decimalFormat.format(tongtien));
@@ -277,7 +269,7 @@ public class ThanhToanActivity extends AppCompatActivity {
 
     private void initView() {
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
-        toolbar = findViewById(R.id.toolbar);
+        ivBack = findViewById(R.id.ivBack);
         txttongtien = findViewById(R.id.txttongtien);
         edtsdt = findViewById(R.id.edtsdt);
         txtemail = findViewById(R.id.txtemail);
