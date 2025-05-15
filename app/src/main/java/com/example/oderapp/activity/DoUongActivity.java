@@ -1,5 +1,6 @@
 package com.example.oderapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.example.oderapp.model.SanPhamMoi;
 import com.example.oderapp.retrofit.ApiBanHang;
 import com.example.oderapp.retrofit.RetrofitClient;
 import com.example.oderapp.utils.Utils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +34,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DoUongActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    ImageView ivBack;
     ApiBanHang apiBanHang;
+    BottomNavigationView navigationView;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     int page = 1;
     int loai;
@@ -51,7 +53,7 @@ public class DoUongActivity extends AppCompatActivity {
         loai = getIntent().getIntExtra("loai", 1);
         AnhXa();
 //        ActionToolBar();
-        ivBack.setOnClickListener(v -> finish());
+        getEventClick();
         getData(page);
         addEventLoad();
     }
@@ -151,13 +153,61 @@ public class DoUongActivity extends AppCompatActivity {
 
     private void AnhXa() {
 //        toolbar = findViewById(R.id.toolbardu);
-        ivBack = findViewById(R.id.ivBack);
         recyclerView = findViewById(R.id.recycleview_du);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         sanPhamMoiList = new ArrayList<>();
+        navigationView = findViewById(R.id.bottom_navigation);
+        if (loai == 1) {
+            navigationView.setSelectedItemId(R.id.nav_drink);
+        } else if (loai == 2) {
+            navigationView.setSelectedItemId(R.id.nav_cake);
+        }
+
     }
+    private void getEventClick() {
+        navigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_home) {
+                if (!MainActivity.class.isAssignableFrom(getClass())) {
+                    Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(trangchu);
+                    finish();
+                }
+            } else if (id == R.id.nav_drink) {
+                if (!(DoUongActivity.class.isAssignableFrom(getClass()) && loai == 1)) {
+                    Intent douong = new Intent(getApplicationContext(), DoUongActivity.class);
+                    douong.putExtra("loai", 1);
+                    startActivity(douong);
+                    finish();
+                }
+            } else if (id == R.id.nav_cake) {
+                if (!(DoUongActivity.class.isAssignableFrom(getClass()) && loai == 2)) {
+                    Intent banh = new Intent(getApplicationContext(), DoUongActivity.class);
+                    banh.putExtra("loai", 2);
+                    startActivity(banh);
+                    finish();
+                }
+            } else if (id == R.id.nav_order) {
+                Intent lichsu = new Intent(getApplicationContext(), LichSuActivity.class);
+                startActivity(lichsu);
+                finish();
+            } else if (id == R.id.nav_other) {
+                Intent khac = new Intent(getApplicationContext(), OthersActivity.class);
+                startActivity(khac);
+                finish();
+            } else {
+                return false;
+            }
+
+            return true;
+        });
+
+    }
+
+
 
     @Override
     protected void onDestroy(){

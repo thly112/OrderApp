@@ -7,11 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.GioHangActivity">
+
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/beige">
+        android:background="@color/beige"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,12 +55,13 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleviewgiohang"
-                android:layout_margin="15dp"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_marginTop="10dp" />
         </LinearLayout>
     </ScrollView>
+
     <TextView
         android:id="@+id/txtgiohangtrong"
         app:layout_constraintTop_toTopOf="parent"

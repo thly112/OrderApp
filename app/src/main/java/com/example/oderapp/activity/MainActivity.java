@@ -79,17 +79,16 @@ public class MainActivity extends AppCompatActivity {
     FrameLayout frameLayout;
 //    ImageView imgsearch;
     EditText edtSearch;
+    int loai;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Window window = getWindow();
         ((android.view.Window) window).setStatusBarColor(ContextCompat.getColor(this, R.color.beige));
-
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
         Paper.init(this);
         initAccessToken();
-
         if (Paper.book().read("user") != null){
             User user = Paper.book().read("user");
             Utils.user_current = user;
@@ -97,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
         getToken();
         Anhxa();
         ActionViewFlipper();
-
         if(isConnected(this)){
             getLoaiSanPham();
             getSpMoi();
+            loai = getIntent().getIntExtra("loai", 1);
             getEventClick();
         }else{
             Toast.makeText(getApplicationContext(), "khong co internet", Toast.LENGTH_LONG).show();
@@ -169,69 +168,40 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getEventClick() {
-//        listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                switch (i){
-//                    case 0:
-//                        Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
-//                        startActivity(trangchu);
-//                        break;
-//                    case 1:
-//                        Intent douong = new Intent(getApplicationContext(), DoUongActivity.class);
-//                        douong.putExtra("loai",1);
-//                        startActivity(douong);
-//                        break;
-//                    case 2:
-//                        Intent banh = new Intent(getApplicationContext(), DoUongActivity.class);
-//                        banh.putExtra("loai",2);
-//                        startActivity(banh);
-//                        break;
-//                    case 5:
-//                        Intent lichsu = new Intent(getApplicationContext(), LichSuActivity.class);
-//                        startActivity(lichsu);
-//                        break;
-//                    case 6:
-//                        // xoa key user
-//                        Paper.book().delete("user");
-//                        FirebaseAuth.getInstance().signOut();
-//                        Intent dangnhap = new Intent(getApplicationContext(), LoginActivity.class);
-//                        startActivity(dangnhap);
-//                        finish();
-//                        break;
-//                }
-//            }
-//        });
         navigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
+
             if (id == R.id.nav_home) {
-                // Chuyển tới Home
-                Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(trangchu);
+                // Nếu chưa ở MainActivity thì mới chuyển
+                if (!getClass().getSimpleName().equals("MainActivity")) {
+                    Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(trangchu);
+                    finish();
+                }
             } else if (id == R.id.nav_drink) {
-                // Chuyển tới Drinks
-                Intent douong = new Intent(getApplicationContext(), DoUongActivity.class);
-                douong.putExtra("loai", 1);
-                startActivity(douong);
+                // Nếu chưa ở DoUongActivity với loai=1 thì chuyển
+                if (!(getClass().getSimpleName().equals("DoUongActivity") && loai == 1)) {
+                    Intent douong = new Intent(getApplicationContext(), DoUongActivity.class);
+                    douong.putExtra("loai", 1);
+                    startActivity(douong);
+                    finish();
+                }
             } else if (id == R.id.nav_cake) {
-                // Chuyển tới Cakes
-                Intent banh = new Intent(getApplicationContext(), DoUongActivity.class);
-                banh.putExtra("loai", 2);
-                startActivity(banh);
+                // Nếu chưa ở DoUongActivity với loai=2 thì chuyển
+                if (!(getClass().getSimpleName().equals("DoUongActivity") && loai == 2)) {
+                    Intent banh = new Intent(getApplicationContext(), DoUongActivity.class);
+                    banh.putExtra("loai", 2);
+                    startActivity(banh);
+                    finish();
+                }
             } else if (id == R.id.nav_order) {
-                // Chuyển tới Purchase History
                 Intent lichsu = new Intent(getApplicationContext(), LichSuActivity.class);
                 startActivity(lichsu);
+                finish();
             } else if (id == R.id.nav_other) {
                 Intent khac = new Intent(getApplicationContext(), OthersActivity.class);
                 startActivity(khac);
-                // Đăng xuất
-//                Paper.book().delete("user");
-//                FirebaseAuth.getInstance().signOut();
-//                Intent dangnhap = new Intent(getApplicationContext(), LoginActivity.class);
-//                startActivity(dangnhap);
-//                finish();
+                finish();
             }
 
             drawerLayout.closeDrawers(); // Đóng drawer sau khi chọn
@@ -314,8 +284,8 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,1);
         recyclerViewManHinhChinh.setLayoutManager(layoutManager);
         recyclerViewManHinhChinh.setHasFixedSize(true);
-//        listViewManHinhChinh = findViewById(R.id.listviewmanhinhchinh);
         navigationView = findViewById(R.id.bottom_navigation);
+        navigationView.setSelectedItemId(R.id.nav_home);
         drawerLayout = findViewById(R.id.drawerlayout);
         badge = findViewById(R.id.menu_sl);
         frameLayout = findViewById(R.id.framegiohang);

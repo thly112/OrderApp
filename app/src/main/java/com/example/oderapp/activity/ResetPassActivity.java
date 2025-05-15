@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -26,7 +27,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ResetPassActivity extends AppCompatActivity {
     EditText email;
-    AppCompatButton btnreset;
+    ImageView ivBack;
+    AppCompatButton btnreset, btnLogin;
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     ProgressBar progressBar;
@@ -70,12 +72,24 @@ public class ResetPassActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        ivBack.setOnClickListener(v -> finish());
+
     }
 
     private void initView() {
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
         email = findViewById(R.id.edtresetpass);
         btnreset = findViewById(R.id.btnresetpass);
+        btnLogin = findViewById(R.id.btnLogin);
+        ivBack = findViewById(R.id.ivBack);
         progressBar = findViewById(R.id.progressbar);
     }
     @Override

@@ -23,7 +23,7 @@
 
     <item
         android:id="@+id/nav_other"
-        android:icon="@drawable/more"
+        android:icon="@drawable/user"
         android:title="Others" />
 
 
