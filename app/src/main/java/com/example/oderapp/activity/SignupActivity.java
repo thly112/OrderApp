@@ -2,6 +2,7 @@ package com.example.oderapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,35 +72,30 @@ public class SignupActivity extends AppCompatActivity {
         String strsdt = this.sdt.getText().toString().trim();
         if (stremail.isEmpty() || strpass.isEmpty() || strusername.isEmpty() || strsdt.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(stremail).matches()) {
+            Toast.makeText(this, "Email không hợp lệ", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         if (strpass.length() < 6) {
             Toast.makeText(this, "Mật khẩu phải có ít nhất 6 ký tự", Toast.LENGTH_SHORT).show();
             return;
         }
-        else {
-            firebaseAuth = FirebaseAuth.getInstance();
-            firebaseAuth.createUserWithEmailAndPassword(stremail, strpass)
-                    .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()) {
-                                FirebaseUser user = firebaseAuth.getCurrentUser();
-                                if(user != null){
-                                    postData(stremail, strpass, strusername, strsdt, user.getUid());
-                                }
-                                else{
-                                    Toast.makeText(getApplicationContext(), "Email đã tồn tại", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }
-                    });
+        // Kiểm tra số điện thoại: bắt đầu bằng 0 và 10 chữ số
+        if (!strsdt.matches("^0\\d{9}$")) {
+            Toast.makeText(this, "Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        postData(stremail, strpass, strusername, strsdt);
 
     }
 
-    private void postData(String stremail, String strpass, String strusername, String strsdt, String uid) {
-        compositeDisposable.add(apiBanHang.dangKi(stremail, strpass, strusername, strsdt, uid)
+    private void postData(String stremail, String strpass, String strusername, String strsdt) {
+        compositeDisposable.add(apiBanHang.dangKi(stremail, strpass, strusername, strsdt)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
