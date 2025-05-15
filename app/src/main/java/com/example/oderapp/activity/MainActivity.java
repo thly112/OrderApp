@@ -64,7 +64,6 @@ import vn.zalopay.sdk.ZaloPaySDK;
 import vn.zalopay.sdk.listeners.PayOrderListener;
 
 public class MainActivity extends AppCompatActivity {
-    Toolbar toolbar;
     ViewFlipper viewFlipper;
     RecyclerView recyclerViewManHinhChinh;
     BottomNavigationView navigationView;
@@ -97,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         }
         getToken();
         Anhxa();
-        ActionBar();
         ActionViewFlipper();
 
         if(isConnected(this)){
@@ -307,22 +305,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void ActionBar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationIcon(android.R.drawable.ic_menu_sort_by_size);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.START);
 
-            }
-        });
-    }
 
     private void Anhxa() {
         edtSearch = findViewById(R.id.edtsearch);
-        toolbar = findViewById(R.id.toolbarmanhinhchinh);
         viewFlipper = findViewById(R.id.viewflipper);
         recyclerViewManHinhChinh = findViewById(R.id.recycleview);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,1);

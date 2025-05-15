@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerlayout"
     android:fitsSystemWindows="true"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
@@ -14,10 +13,7 @@
         android:layout_height="match_parent">
 
     <!-- Nội dung chính -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation">
+
     <!-- MAIN CONTENT -->
     <LinearLayout
         android:orientation="vertical"
@@ -25,18 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <!-- Toolbar -->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarmanhinhchinh"
-            app:title="HOME"
-            app:titleTextColor="@color/darkBrown"
-            android:background="@color/lightBrown"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" >
-        </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,7 +111,6 @@
         </LinearLayout>
 
     </LinearLayout>
-    </ScrollView>
 
         <!-- BottomNavigationView cố định dưới cùng -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -137,7 +120,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
+            android:layout_gravity="start"
             android:background="@color/white"
             app:menu="@menu/bottom_nav_menu" />
 
