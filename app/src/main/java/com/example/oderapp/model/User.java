@@ -2,23 +2,7 @@ package com.example.oderapp.model;
 
 public class User {
     int id;
-    String email, pass, username, mobile, uid, token;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
+    String email, pass, username, mobile;
 
     public int getId() {
         return id;

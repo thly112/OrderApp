@@ -19,7 +19,7 @@
     <item
         android:id="@+id/nav_order"
         android:icon="@drawable/order"
-        android:title="Purchase History" />
+        android:title="History" />
 
     <item
         android:id="@+id/nav_other"

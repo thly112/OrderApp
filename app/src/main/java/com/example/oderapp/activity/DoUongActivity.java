@@ -140,19 +140,7 @@ public class DoUongActivity extends AppCompatActivity {
         );
     }
 
-//    private void ActionToolBar() {
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                finish();
-//            }
-//        });
-//    }
-
     private void AnhXa() {
-//        toolbar = findViewById(R.id.toolbardu);
         recyclerView = findViewById(R.id.recycleview_du);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -191,15 +179,24 @@ public class DoUongActivity extends AppCompatActivity {
                     finish();
                 }
             } else if (id == R.id.nav_order) {
-                Intent lichsu = new Intent(getApplicationContext(), LichSuActivity.class);
-                startActivity(lichsu);
-                finish();
+                if (Utils.user_current == null) {
+                    Toast.makeText(getApplicationContext(), "Bạn cần đăng nhập để xem đơn hàng!", Toast.LENGTH_SHORT).show();
+                    return false;
+                } else {
+                    Intent lichsu = new Intent(getApplicationContext(), LichSuActivity.class);
+                    startActivity(lichsu);
+                    finish();
+                }
+
             } else if (id == R.id.nav_other) {
-                Intent khac = new Intent(getApplicationContext(), OthersActivity.class);
-                startActivity(khac);
-                finish();
-            } else {
-                return false;
+                if (Utils.user_current == null) {
+                    Toast.makeText(getApplicationContext(), "Bạn cần đăng nhập để xem thông tin tài khoản!", Toast.LENGTH_SHORT).show();
+                    return false;
+                } else {
+                    Intent khac = new Intent(getApplicationContext(), OthersActivity.class);
+                    startActivity(khac);
+                    finish();
+                }
             }
 
             return true;

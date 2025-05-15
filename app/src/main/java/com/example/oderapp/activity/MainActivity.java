@@ -4,34 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.oderapp.R;
 import com.example.oderapp.adapter.LoaiSPAdapter;
 import com.example.oderapp.adapter.SanPhamMoiAdapter;
@@ -42,11 +33,7 @@ import com.example.oderapp.retrofit.ApiBanHang;
 import com.example.oderapp.retrofit.RetrofitClient;
 import com.example.oderapp.utils.AccessToken;
 import com.example.oderapp.utils.Utils;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
@@ -58,10 +45,6 @@ import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import okhttp3.internal.Util;
-import vn.zalopay.sdk.ZaloPayError;
-import vn.zalopay.sdk.ZaloPaySDK;
-import vn.zalopay.sdk.listeners.PayOrderListener;
 
 public class MainActivity extends AppCompatActivity {
     ViewFlipper viewFlipper;
@@ -77,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
     SanPhamMoiAdapter spAdapter;
     NotificationBadge badge;
     FrameLayout frameLayout;
-//    ImageView imgsearch;
     EditText edtSearch;
     int loai;
     @Override
@@ -96,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         Anhxa();
         ActionViewFlipper();
         if(isConnected(this)){
-            getLoaiSanPham();
             getSpMoi();
             loai = getIntent().getIntExtra("loai", 1);
             getEventClick();
@@ -171,10 +152,20 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }
             } else if (id == R.id.nav_order) {
-                Intent lichsu = new Intent(getApplicationContext(), LichSuActivity.class);
-                startActivity(lichsu);
-                finish();
+                if (Utils.user_current == null) {
+                    Toast.makeText(getApplicationContext(), "Bạn cần đăng nhập để xem đơn hàng!", Toast.LENGTH_SHORT).show();
+                    return false;
+                } else {
+                    Intent lichsu = new Intent(getApplicationContext(), LichSuActivity.class);
+                    startActivity(lichsu);
+                    finish();
+                }
+
             } else if (id == R.id.nav_other) {
+                if (Utils.user_current == null) {
+                    Toast.makeText(getApplicationContext(), "Bạn cần đăng nhập để xem thông tin tài khoản!", Toast.LENGTH_SHORT).show();
+
+                }
                 Intent khac = new Intent(getApplicationContext(), OthersActivity.class);
                 startActivity(khac);
                 finish();
@@ -204,24 +195,6 @@ public class MainActivity extends AppCompatActivity {
                 ));
     }
 
-    private void getLoaiSanPham() {
-//        compositeDisposable.add(apiBanHang.getLoaiSP()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(
-//                        loaiSPModel -> {
-//                            if (loaiSPModel.isSuccess()) {
-//                                mangloaisp = loaiSPModel.getResult();
-//                                loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
-//                                listViewManHinhChinh.setAdapter(loaiSPAdapter);
-//                            }
-//                        },
-//                        throwable -> {
-//                            Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server lsp" + throwable.getMessage(), Toast.LENGTH_LONG).show();
-//                        }
-//                ));
-
-    }
     private void ActionViewFlipper() {
         // Danh sách ảnh từ drawable
         int[] mangquangcao = {
