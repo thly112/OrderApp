@@ -1,5 +1,6 @@
 package com.example.oderapp.retrofit;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 
 import com.example.oderapp.model.DonHangModel;
@@ -76,6 +77,7 @@ public interface ApiBanHang {
     Observable<SanPhamMoiModel> search(
             @Field("search") String search
     );
+
     @POST("gettoken.php")
     @FormUrlEncoded
     Observable<UserModel> gettoken(
@@ -88,6 +90,7 @@ public interface ApiBanHang {
             @Field("id") int id,
             @Field("token") String token
     );
+
     @POST("updatezalopay.php")
     @FormUrlEncoded
     Observable<MessageModel> updateZalo(
@@ -96,4 +99,11 @@ public interface ApiBanHang {
     );
 
 
+    @POST("updateuser.php")
+    @FormUrlEncoded
+    Observable<UserModel> updateUser(
+            @Field("id") int id,
+            @Field("username") String username,
+            @Field("mobile") String mobile
+    );
 }

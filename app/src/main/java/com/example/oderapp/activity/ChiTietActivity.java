@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,9 +15,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 
 import com.bumptech.glide.Glide;
 import com.example.oderapp.R;
@@ -37,7 +34,7 @@ public class ChiTietActivity extends AppCompatActivity {
     Toolbar toolbar;
     SanPhamMoi sanPhamMoi;
     NotificationBadge badge;
-    ImageView ivBack, ivCart, ivFavourite;
+    ImageView ivBack, ivCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +56,6 @@ public class ChiTietActivity extends AppCompatActivity {
              startActivity(new Intent(this, GioHangActivity.class));
         });
 
-        ivFavourite.setOnClickListener(v -> {
-            Toast.makeText(this, "Thêm vào mục yêu thích", Toast.LENGTH_SHORT).show();
-            // TODO: Xử lý thêm vào mục yêu thích
-        });
 
         minusCart.setOnClickListener(v -> {
             int currentQuantity = Integer.parseInt(numberItemTxt.getText().toString());
@@ -155,10 +148,9 @@ public class ChiTietActivity extends AppCompatActivity {
         btnthem = findViewById(R.id.btnthemvaogio);
 
         imghinhanh = findViewById(R.id.imgchitiet);
-        toolbar = findViewById(R.id.toolbar);
+//        toolbar = findViewById(R.id.toolbar);
         badge = findViewById(R.id.menu_sl);
         ivBack = findViewById(R.id.ivBack);
-        ivFavourite = findViewById(R.id.ivFavourite);
         ivCart = findViewById(R.id.ivCart);
         numberItemTxt = findViewById(R.id.numberItemTxt);
         minusCart = findViewById(R.id.minusCart);

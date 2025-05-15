@@ -8,10 +8,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,6 +25,7 @@ import android.widget.ViewFlipper;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -37,6 +43,7 @@ import com.example.oderapp.retrofit.RetrofitClient;
 import com.example.oderapp.utils.AccessToken;
 import com.example.oderapp.utils.Utils;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -57,11 +64,10 @@ import vn.zalopay.sdk.ZaloPaySDK;
 import vn.zalopay.sdk.listeners.PayOrderListener;
 
 public class MainActivity extends AppCompatActivity {
-    Toolbar toolbar;
     ViewFlipper viewFlipper;
     RecyclerView recyclerViewManHinhChinh;
-    NavigationView navigationView;
-    ListView listViewManHinhChinh;
+    BottomNavigationView navigationView;
+//    ListView listViewManHinhChinh;
     DrawerLayout drawerLayout;
     LoaiSPAdapter loaiSPAdapter;
     List<LoaiSP> mangloaisp;
@@ -71,28 +77,29 @@ public class MainActivity extends AppCompatActivity {
     SanPhamMoiAdapter spAdapter;
     NotificationBadge badge;
     FrameLayout frameLayout;
-    ImageView imgsearch;
-
+//    ImageView imgsearch;
+    EditText edtSearch;
+    int loai;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Window window = getWindow();
+        ((android.view.Window) window).setStatusBarColor(ContextCompat.getColor(this, R.color.beige));
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
         Paper.init(this);
         initAccessToken();
-
         if (Paper.book().read("user") != null){
             User user = Paper.book().read("user");
             Utils.user_current = user;
         }
         getToken();
         Anhxa();
-        ActionBar();
         ActionViewFlipper();
         if(isConnected(this)){
-//            ActionViewFlipper();
             getLoaiSanPham();
             getSpMoi();
+            loai = getIntent().getIntExtra("loai", 1);
             getEventClick();
         }else{
             Toast.makeText(getApplicationContext(), "khong co internet", Toast.LENGTH_LONG).show();
@@ -125,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("token 1", token);
+                        Log.d("token ", token);
                         Utils.tokenSend = token;
                     }
                 });
@@ -161,43 +168,48 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getEventClick() {
-        listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
+        navigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
 
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (i){
-                    case 0:
-                        Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(trangchu);
-                        break;
-                    case 1:
-                        Intent douong = new Intent(getApplicationContext(), DoUongActivity.class);
-                        douong.putExtra("loai",1);
-                        startActivity(douong);
-                        break;
-                    case 2:
-                        Intent banh = new Intent(getApplicationContext(), DoUongActivity.class);
-                        banh.putExtra("loai",2);
-                        startActivity(banh);
-                        break;
-                    case 5:
-                        Intent lichsu = new Intent(getApplicationContext(), LichSuActivity.class);
-                        startActivity(lichsu);
-                        break;
-                    case 6:
-                        // xoa key user
-                        Paper.book().delete("user");
-                        FirebaseAuth.getInstance().signOut();
-                        Intent dangnhap = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(dangnhap);
-                        finish();
-                        break;
+            if (id == R.id.nav_home) {
+                // Nếu chưa ở MainActivity thì mới chuyển
+                if (!getClass().getSimpleName().equals("MainActivity")) {
+                    Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(trangchu);
+                    finish();
                 }
+            } else if (id == R.id.nav_drink) {
+                // Nếu chưa ở DoUongActivity với loai=1 thì chuyển
+                if (!(getClass().getSimpleName().equals("DoUongActivity") && loai == 1)) {
+                    Intent douong = new Intent(getApplicationContext(), DoUongActivity.class);
+                    douong.putExtra("loai", 1);
+                    startActivity(douong);
+                    finish();
+                }
+            } else if (id == R.id.nav_cake) {
+                // Nếu chưa ở DoUongActivity với loai=2 thì chuyển
+                if (!(getClass().getSimpleName().equals("DoUongActivity") && loai == 2)) {
+                    Intent banh = new Intent(getApplicationContext(), DoUongActivity.class);
+                    banh.putExtra("loai", 2);
+                    startActivity(banh);
+                    finish();
+                }
+            } else if (id == R.id.nav_order) {
+                Intent lichsu = new Intent(getApplicationContext(), LichSuActivity.class);
+                startActivity(lichsu);
+                finish();
+            } else if (id == R.id.nav_other) {
+                Intent khac = new Intent(getApplicationContext(), OthersActivity.class);
+                startActivity(khac);
+                finish();
             }
+
+            drawerLayout.closeDrawers(); // Đóng drawer sau khi chọn
+            return true;
         });
     }
 
-    private void getSpMoi() {
+        private void getSpMoi() {
         compositeDisposable.add(apiBanHang.getSpMoi()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -217,71 +229,63 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getLoaiSanPham() {
-        compositeDisposable.add(apiBanHang.getLoaiSP()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        loaiSPModel -> {
-                            if (loaiSPModel.isSuccess()) {
-                                mangloaisp = loaiSPModel.getResult();
-                                loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
-                                listViewManHinhChinh.setAdapter(loaiSPAdapter);
-                            }
-                        },
-                        throwable -> {
-                            Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server lsp" + throwable.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                ));
+//        compositeDisposable.add(apiBanHang.getLoaiSP()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(
+//                        loaiSPModel -> {
+//                            if (loaiSPModel.isSuccess()) {
+//                                mangloaisp = loaiSPModel.getResult();
+//                                loaiSPAdapter = new LoaiSPAdapter(getApplicationContext(), mangloaisp);
+//                                listViewManHinhChinh.setAdapter(loaiSPAdapter);
+//                            }
+//                        },
+//                        throwable -> {
+//                            Toast.makeText(getApplicationContext(), "Khong ket noi duoc voi server lsp" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+//                        }
+//                ));
 
     }
     private void ActionViewFlipper() {
-        List<String> mangquangcao = new ArrayList<>();
-        mangquangcao.add("https://res.cloudinary.com/ds1rgnuvr/image/upload/v1744212311/2d009ced-6f4b-4d2a-9d04-60751cd82e04.png");
-        mangquangcao.add("https://res.cloudinary.com/ds1rgnuvr/image/upload/v1744212203/3c50b50f-a8a8-48a9-b9c0-9fc442b9d736.png");
-        mangquangcao.add("https://res.cloudinary.com/ds1rgnuvr/image/upload/v1744212144/2c0fbf7d-7c9b-4f7f-906d-6ab63ddaed04.png");
+        // Danh sách ảnh từ drawable
+        int[] mangquangcao = {
+                R.drawable.banner,
+                R.drawable.banner2,
+                R.drawable.banner3
+        };
 
-        for (int i = 0; i < mangquangcao.size(); i++) {
+        // Thêm ảnh vào ViewFlipper
+        for (int i = 0; i < mangquangcao.length; i++) {
             ImageView imageView = new ImageView(getApplicationContext());
-            Glide.with(getApplicationContext()).load(mangquangcao.get(i)).into(imageView);
+            imageView.setImageResource(mangquangcao[i]);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             viewFlipper.addView(imageView);
         }
 
+        // Tạo animation trượt trái/phải
         Animation slideIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_right);
         Animation slideOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_out_left);
 
         viewFlipper.setInAnimation(slideIn);
         viewFlipper.setOutAnimation(slideOut);
 
+        // Tự động lật ảnh
         viewFlipper.setFlipInterval(4000);
         viewFlipper.setAutoStart(true);
-
-        viewFlipper.setDrawingCacheEnabled(true);
     }
 
-    private void ActionBar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationIcon(android.R.drawable.ic_menu_sort_by_size);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.START);
 
-            }
-        });
-    }
+
 
     private void Anhxa() {
-        imgsearch = findViewById(R.id.imgsearch);
-        toolbar = findViewById(R.id.toolbarmanhinhchinh);
+        edtSearch = findViewById(R.id.edtsearch);
         viewFlipper = findViewById(R.id.viewflipper);
         recyclerViewManHinhChinh = findViewById(R.id.recycleview);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,1);
         recyclerViewManHinhChinh.setLayoutManager(layoutManager);
         recyclerViewManHinhChinh.setHasFixedSize(true);
-        listViewManHinhChinh = findViewById(R.id.listviewmanhinhchinh);
-        navigationView = findViewById(R.id.navigationview);
+        navigationView = findViewById(R.id.bottom_navigation);
+        navigationView.setSelectedItemId(R.id.nav_home);
         drawerLayout = findViewById(R.id.drawerlayout);
         badge = findViewById(R.id.menu_sl);
         frameLayout = findViewById(R.id.framegiohang);
@@ -305,13 +309,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(giohang);
             }
         });
+        edtSearch.setOnTouchListener((v, event) -> {
+            final int DRAWABLE_RIGHT = 2;
 
-        imgsearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-                startActivity(intent);
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (edtSearch.getRight() - edtSearch.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    v.performClick(); // Gọi lại performClick để xử lý accessibility
+
+                    String keyword = edtSearch.getText().toString().trim();
+                    if (!keyword.isEmpty()) {
+                        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                        intent.putExtra("keyword", keyword);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(MainActivity.this, "Vui lòng nhập từ khóa!", Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
             }
+            return false;
         });
     }
 

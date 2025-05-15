@@ -1,60 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:elevation="8dp"
-    app:cardCornerRadius="5dp"
-    android:layout_margin="5dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="8dp"
+    android:background="@drawable/white_bg"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_margin="5dp"
-        android:weightSum="10"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/itemdu_image"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="8dp"
-            android:scaleType="centerCrop"/>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="7"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:padding="3dp">
-            <TextView
-                android:id="@+id/itemdu_ten"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="Tên sản phẩm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/itemdu_idsp"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/itemdu_gia"
-                android:textSize="16sp"
-                android:text="Giá: 5000đ"
-                android:textColor="@color/orange"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/itemdu_mota"
-                android:textSize="14sp"
-                android:text="Mô tả:"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+    android:layout_height="170dp">
 
-        </LinearLayout>
-    </LinearLayout>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/itemdu_image"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:padding="6dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/CircleImageview"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-</androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/itemdu_ten"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Tên sản phẩm"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintStart_toEndOf="@+id/itemdu_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/itemdu_gia"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_marginTop="20dp"
+        android:text="Giá: 5000đ"
+        android:textColor="@color/brown"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.095"
+        app:layout_constraintStart_toEndOf="@+id/itemdu_image"
+        app:layout_constraintTop_toBottomOf="@+id/itemdu_ten" />
+</androidx.constraintlayout.widget.ConstraintLayout>
