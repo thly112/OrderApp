@@ -43,11 +43,17 @@ Khách chưa đăng nhập (guest) vẫn có thể xem sản phẩm và tìm ki�
 ## 📂 Cấu trúc chính
 
 📁 app/
+
 ├── activities/ # Giao diện từng màn hình
+
 ├── adapters/ # Adapter cho RecyclerView
+
 ├── models/ # Các lớp dữ liệu
+
 ├── network/ # Retrofit API Interface
+
 ├── utils/ # Các tiện ích dùng chung
+
 └── res/ # Layout, drawable, mipmap, v.v.
 
 ---
@@ -104,3 +110,11 @@ Tích hợp **ZaloPay SDK** cho phép người dùng lựa chọn thanh toán đ
 1. Clone repo:
    ```bash
    git clone https://github.com/your-username/cafe-order-app.git
+
+📌 Ghi chú
+Dữ liệu đơn giản phục vụ demo.
+
+Có thể mở rộng thêm: quản lý sản phẩm, khuyến mãi, đánh giá, v.v.
+
+❤️ Cảm ơn
+Xin chân thành cảm ơn thầy Nguyễn Hữu Trung đã hướng dẫn và hỗ trợ nhóm trong suốt quá trình thực hiện đồ án.
