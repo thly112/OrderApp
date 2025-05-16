@@ -106,11 +106,6 @@ Tích hợp **ZaloPay SDK** cho phép người dùng lựa chọn thanh toán đ
 3. Tạo CSDL `orderappdb` trong MySQL (import file `orderappdb.sql` nếu có).
 4. Kiểm tra API tại `http://localhost/banhang/`.
 
-### Android
-1. Clone repo:
-   ```bash
-   git clone https://github.com/your-username/cafe-order-app.git
-
 📌 Ghi chú
 Dữ liệu đơn giản phục vụ demo.
 
